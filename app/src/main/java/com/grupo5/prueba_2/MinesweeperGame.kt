@@ -32,10 +32,15 @@ class MinesweeperGame : AppCompatActivity() {
     private  var lost =0
     private var lastGameTime=Integer.MAX_VALUE
     private var fastestTime=Integer.MAX_VALUE
+
     private var personajeColocado = false
+    private var personajeX = -1
+    private var personajeY = -1
 
     //TODO: Cambiar casillas por ladrillos de adobe
     //TODO: Poner variable que controle las reliquias
+    //TODO: Implementar cuenta atras
+
 
     companion object {
         const val MINE = -1
@@ -109,6 +114,9 @@ class MinesweeperGame : AppCompatActivity() {
             val builder= AlertDialog.Builder(this)
             with(builder)
             {
+
+                //TODO:Cambiar mensaje
+
                 setTitle("Game Instructions")
                 setMessage(
                     "Hi! Welcome to the Minesweeper Game." +
@@ -199,6 +207,7 @@ class MinesweeperGame : AppCompatActivity() {
                 params1.weight=1.0F
                 button.setBackgroundResource(R.drawable.unrevealed)
                 // params1.rightMargin=5
+
                 linearLayout.addView(button)
                 button.setOnClickListener {
                     // if the user has clicked the cell first time , the mines will be setup in the game ensuring the first clicked cell isnt a mine/bomb.
@@ -282,34 +291,69 @@ class MinesweeperGame : AppCompatActivity() {
             reveal -> {
 
                 //TODO: que pasa si se toca una reliquia
-                //TODO: Poner personaje
+
+                //Si es el primer movimiento se coloca al personaje
                 if(!personajeColocado){
                     mineboard[x][y].value = PERSONAJE
+                    personajeX = x
+                    personajeY = y
                     personajeColocado = true
                     reveal(x,y)
                     return true
                 }
 
-                if(mineboard[x][y].value == ESCALERA && mineboard[x][y].isRevealed){
-                    status = Status.WON
-                    finalResult()
-                    return true
-                }
+                //El personaje se podra mover libremente por las casillas ya reveladas, si selecciona la escalera
+                //ganara la partida
+                if(mineboard[x][y].isRevealed){
+                    if(mineboard[x][y].isFlagged){
+                        return false
+                    }
+                    else if (mineboard[x][y].value == ESCALERA){
+                        status = Status.WON
+                        finalResult()
+                        return true
+                    }
+                    else if(mineboard[x][y].value >= 0){
+                        mineboard[x][y].valorOriginal = mineboard[x][y].value
+                        mineboard[personajeX][personajeY].value = mineboard[personajeX][personajeY].valorOriginal
 
-                if(mineboard[x][y].isFlagged || mineboard[x][y].isRevealed) {
+                        personajeX = x
+                        personajeY = y
+
+                        mineboard[x][y].value = PERSONAJE
+                        reveal(x,y)
+                        return true
+                    }
+                }
+                else{
+                    //Si la casilla aun no ha sido revelada, solo podra moverse de una en una (tambien en diagonal) y esta sera revelada
+                    //Si toca una mina perdera la partida
+                    if ((Math.abs(personajeX - x) + Math.abs(personajeY - y) == 1)){
+                        if(mineboard[x][y].value==MINE) {
+                            status = Status.LOST
+                            finalResult()
+                            return true
+                        }
+                        else if (mineboard[x][y].value >= 0) {
+                            mineboard[x][y].valorOriginal = mineboard[x][y].value
+                            mineboard[personajeX][personajeY].value = mineboard[personajeX][personajeY].valorOriginal
+
+                            personajeX = x
+                            personajeY = y
+
+                            mineboard[x][y].value = PERSONAJE
+                            reveal(x, y)
+                            return true
+                        }
+                        else{
+                            reveal(x, y)
+                            return true
+                        }
+                    }
                     return false
+
                 }
 
-                if(mineboard[x][y].value==MINE) {
-                    status = Status.LOST
-                    finalResult()
-                    return true
-                }
-
-                else {
-                    reveal(x, y)
-                }
-                return true
             }
 
             flag -> {
@@ -441,7 +485,7 @@ class MinesweeperGame : AppCompatActivity() {
     private fun reveal(x: Int,y:Int) {
         if(!mineboard[x][y].isRevealed && !mineboard[x][y].isFlagged && mineboard[x][y].value!=-1) {
             mineboard[x][y].isRevealed=true
-            if(mineboard[x][y].value==0 || mineboard[x][y].value == PERSONAJE) {
+            if(mineboard[x][y].value==0) {
                 for(i in movement)
                     for(j in movement)
                         if((i!=0 || j!=0) && ((x+i) in 0 until rows ) && ((y+j) in 0 until columns))
@@ -511,6 +555,7 @@ class MinesweeperGame : AppCompatActivity() {
             for (j in movement) {
                 if(((x+i) in 0 until rows) && ((y+j) in 0 until columns) && mineboard[x+i][y+j].value >= 0) {
                     mineboard[x+i][y+j].value++
+                    mineboard[x+i][y+j].valorOriginal++
                 }
             }
         }

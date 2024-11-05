@@ -9,12 +9,36 @@ class MineCell @JvmOverloads constructor(
 ) : AppCompatButton(context, attrs, defStyleAttr) {
 
 
-    var value :Int=0
-    var isRevealed:Boolean=false
-    var isFlagged=false
-    var isMine=false
-    var isEscalera=false
+    var value :Int = 0
+    var isRevealed:Boolean = false
+    var isFlagged = false
+    var isMine = false
+    var isEscalera = false
+    var valorOriginal = 0
 
+    //TODO: geters y seters
+    public fun getValue() : Int {
+        return value
+    }
 
+    public fun getIsRevealed() : Boolean {
+        return isRevealed
+    }
+
+    public fun getIsFlagged() : Boolean {
+        return isFlagged
+    }
+
+    public fun getIsMine() : Boolean {
+        return isMine
+    }
+
+    public fun getIsEscalera() : Boolean {
+        return isEscalera
+    }
+
+    public fun getValorOriginal() : Int {
+        return valorOriginal
+    }
 
 }
