@@ -13,6 +13,7 @@ class MineCell @JvmOverloads constructor(
     var isRevealed:Boolean=false
     var isFlagged=false
     var isMine=false
+    var isEscalera=false
 
 
 

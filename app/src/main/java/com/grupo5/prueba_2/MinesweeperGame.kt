@@ -32,9 +32,15 @@ class MinesweeperGame : AppCompatActivity() {
     private  var lost =0
     private var lastGameTime=Integer.MAX_VALUE
     private var fastestTime=Integer.MAX_VALUE
+    private var personajeColocado = false
+
+    //TODO: Cambiar casillas por ladrillos de adobe
+    //TODO: Poner variable que controle las reliquias
 
     companion object {
         const val MINE = -1
+        const val ESCALERA = -2
+        const val PERSONAJE = -3
         const val reveal="reveal"
         const val flag= "flag"
         val movement= arrayOf(-1,0,1)
@@ -62,6 +68,7 @@ class MinesweeperGame : AppCompatActivity() {
             //level indicates the difficulty level of game
             val level=intent.getIntExtra("Level",1)
             when (level) {
+                //TODO: Incluir el numero de trozos de reliquias
                 0 -> {
                     rows=8
                     columns=8
@@ -170,7 +177,7 @@ class MinesweeperGame : AppCompatActivity() {
             else
             {
                 toMove= reveal
-                choice.setImageResource(R.drawable.bomb)
+                choice.setImageResource(R.drawable.pala)
             }
         }
         for(i in 0 until rows)
@@ -190,15 +197,16 @@ class MinesweeperGame : AppCompatActivity() {
                 id++
                 button.layoutParams=params1
                 params1.weight=1.0F
-                button.setBackgroundResource(R.drawable.notopenednew)
+                button.setBackgroundResource(R.drawable.unrevealed)
                 // params1.rightMargin=5
                 linearLayout.addView(button)
                 button.setOnClickListener {
                     // if the user has clicked the cell first time , the mines will be setup in the game ensuring the first clicked cell isnt a mine/bomb.
                     if (isFirstmove) {
                         isFirstmove = false
-
                         setupmines(i, j)
+                        ponerEscalera()
+                        //TODO: Poner las reliquias en el tablero
                     }
                     move(toMove, i, j)
                     displayBoard()
@@ -248,7 +256,9 @@ class MinesweeperGame : AppCompatActivity() {
         with(minecell)
         {
             when (value) {
-                0 -> setBackgroundResource(R.drawable.zero)
+                -3 -> setBackgroundResource(R.drawable.protagonista)
+                -2 -> setBackgroundResource(R.drawable.escalera)
+                0 -> setBackgroundResource(R.drawable.opened)
                 1 -> setBackgroundResource(R.drawable.one)
                 2 -> setBackgroundResource(R.drawable.two)
                 3 -> setBackgroundResource(R.drawable.three)
@@ -270,42 +280,56 @@ class MinesweeperGame : AppCompatActivity() {
         val minesLeftinfo : TextView = findViewById(R.id.minesLeftinfo)
         when(choice){
             reveal -> {
-                if(mineboard[x][y].isFlagged || mineboard[x][y].isRevealed)
+
+                //TODO: que pasa si se toca una reliquia
+                //TODO: Poner personaje
+                if(!personajeColocado){
+                    mineboard[x][y].value = PERSONAJE
+                    personajeColocado = true
+                    reveal(x,y)
+                    return true
+                }
+
+                if(mineboard[x][y].value == ESCALERA && mineboard[x][y].isRevealed){
+                    status = Status.WON
+                    finalResult()
+                    return true
+                }
+
+                if(mineboard[x][y].isFlagged || mineboard[x][y].isRevealed) {
                     return false
+                }
 
                 if(mineboard[x][y].value==MINE) {
                     status = Status.LOST
                     finalResult()
                     return true
                 }
-                else
-                    reveal(x,y)
+
+                else {
+                    reveal(x, y)
+                }
                 return true
             }
 
             flag -> {
-                with (mineboard[x][y])
-                {
-                    if(isRevealed)
+                with (mineboard[x][y]) {
+                    if(isRevealed) {
                         return false
-                    else if(isFlagged)
-                    { isFlagged=false
-                        setBackgroundResource(R.drawable.notopenednew)
+                    }
+                    else if(isFlagged) {
+                        isFlagged=false
+                        setBackgroundResource(R.drawable.unrevealed)
                         flaggedmines--
-
                         minesLeftinfo.text= (mines-flaggedmines).toString()
                         return true
-
                     }
-                    else
-                    {
-                        if(flaggedmines==mines)
-                        {
+                    else {
+                        if(flaggedmines==mines) {
                             Toast.makeText(this@MinesweeperGame,"You cannot flag more mines",Toast.LENGTH_SHORT).show()
                             return false
                         }
-                        else
-                        {
+                        else {
                             isFlagged=true
                             flaggedmines++
                             setBackgroundResource(R.drawable.flag)
@@ -319,8 +343,6 @@ class MinesweeperGame : AppCompatActivity() {
             }
 
         }
-
-
 
         return true
     }
@@ -345,18 +367,14 @@ class MinesweeperGame : AppCompatActivity() {
         if(status==Status.WON) {
             lastGameTime=currScore
             won++
-            if(currScore<fastestTime)
-            {
+            if(currScore<fastestTime) {
                 fastestTime = currScore
             }
-
-
         }
 
         else if(status == Status.LOST){
             lost++
             lastGameTime=Int.MAX_VALUE
-
         }// updation is done as per the result of game
         with(sharedPref.edit()) {
             putInt("BestScore",fastestTime)
@@ -380,31 +398,18 @@ class MinesweeperGame : AppCompatActivity() {
         }
 
         if(status==Status.WON) {
-
             val intent= Intent(this, gameWon::class.java).apply {
-
-
                 putExtra("result","Won")
-
-
             }
             startActivity(intent)
         }
+
         else if(status==Status.LOST) {
-
             val intent= Intent(this, gameWon::class.java).apply {
-
-
                 putExtra("result","Lose")
-
-
             }
             startActivity(intent)
         }
-
-
-
-
     }
 
     // isComplete() function checks for the win conditions
@@ -413,8 +418,7 @@ class MinesweeperGame : AppCompatActivity() {
         var valuesRevealed=true
         mineboard.forEach{ row->
             row.forEach{
-                if(it.value==MINE)
-                {
+                if(it.value==MINE) {
                     if(!it.isFlagged)
                         minesMarked=false
                 }
@@ -425,8 +429,7 @@ class MinesweeperGame : AppCompatActivity() {
             }
 
         }
-        if(minesMarked&&valuesRevealed)
-        {
+        if(minesMarked && valuesRevealed) {
             status=Status.WON
             return true
         }
@@ -435,14 +438,10 @@ class MinesweeperGame : AppCompatActivity() {
     }
 
 
-    private fun reveal(x: Int,y:Int)
-    {
-
-        if(!mineboard[x][y].isRevealed && !mineboard[x][y].isFlagged&&mineboard[x][y].value!=-1)
-        {
+    private fun reveal(x: Int,y:Int) {
+        if(!mineboard[x][y].isRevealed && !mineboard[x][y].isFlagged && mineboard[x][y].value!=-1) {
             mineboard[x][y].isRevealed=true
-            if(mineboard[x][y].value==0)
-            {
+            if(mineboard[x][y].value==0 || mineboard[x][y].value == PERSONAJE) {
                 for(i in movement)
                     for(j in movement)
                         if((i!=0 || j!=0) && ((x+i) in 0 until rows ) && ((y+j) in 0 until columns))
@@ -450,11 +449,11 @@ class MinesweeperGame : AppCompatActivity() {
             }
         }
     }
+
     // if the user clicks back button, an alert dialog will be shown confirming the action
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
-        with(builder)
-        {
+        with(builder) {
             setTitle(getString(R.string.exit_game))
             setMessage(getString(R.string.abort))
             setPositiveButton(
@@ -475,32 +474,42 @@ class MinesweeperGame : AppCompatActivity() {
     }
     //mines are set randomly
     private fun setupmines(i: Int, j: Int) {
-
         var m=1
-        while(m<=mines)
-
-        {
+        while(m<=mines) {
             val x= Random(System.nanoTime()).nextInt(0,rows)
             val y= Random(System.nanoTime()).nextInt(0,columns)
-            if(((x in i-1..i+1)&&(y in j-1..j+1))||mineboard[x][y].isMine)
-            {
+            if(((x in i-1..i+1)&&(y in j-1..j+1))||mineboard[x][y].isMine) {
                 continue
             }
-            else
-
-                mineboard[x][y].value=-1
+            else {
+                mineboard[x][y].value = -1
+            }
             mineboard[x][y].isMine=true
             updateNeighbours(x,y)
             m++
         }
     }
 
+    //Pone la escalera de salida del nivel en una celda libre
+    private fun ponerEscalera(){
+        var coordX = Random(System.nanoTime()).nextInt(0, rows);
+        var coordY = Random(System.nanoTime()).nextInt(0,columns);
+
+        while(mineboard[coordX][coordY].isMine){
+            coordX = Random(System.nanoTime()).nextInt(0,rows);
+            coordY = Random(System.nanoTime()).nextInt(0,columns);
+        }
+        mineboard[coordX][coordY].isEscalera = true;
+        mineboard[coordX][coordY].value= -2;
+    }
+
+
 
 
     private fun updateNeighbours(  x: Int, y: Int) {
         for (i: Int in movement) {
             for (j in movement) {
-                if(((x+i) in 0 until rows) && ((y+j) in 0 until columns) && mineboard[x+i][y+j].value !=-1) {
+                if(((x+i) in 0 until rows) && ((y+j) in 0 until columns) && mineboard[x+i][y+j].value >= 0) {
                     mineboard[x+i][y+j].value++
                 }
             }
