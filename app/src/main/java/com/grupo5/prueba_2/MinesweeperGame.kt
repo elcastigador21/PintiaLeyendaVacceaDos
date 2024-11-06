@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.SystemClock
 import android.widget.Button
 import android.widget.Chronometer
@@ -14,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import java.util.Locale
 import kotlin.random.Random
 
 class MinesweeperGame : AppCompatActivity() {
@@ -36,16 +38,19 @@ class MinesweeperGame : AppCompatActivity() {
     private var personajeColocado = false
     private var personajeX = -1
     private var personajeY = -1
+    private var cuentaAtras : CountDownTimer? = null
 
     //TODO: Cambiar casillas por ladrillos de adobe
     //TODO: Poner variable que controle las reliquias
-    //TODO: Implementar cuenta atras
 
 
     companion object {
         const val MINE = -1
         const val ESCALERA = -2
         const val PERSONAJE = -3
+        const val TIEMPO_FACIL : Long = 400_000
+        const val TIEMPO_MEDIO : Long = 600_000
+        const val TIEMPO_DIFICIL : Long = 700_000
         const val reveal="reveal"
         const val flag= "flag"
         val movement= arrayOf(-1,0,1)
@@ -56,13 +61,10 @@ class MinesweeperGame : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minesweeper_game)
-        val timer: Chronometer = findViewById(R.id.timer)
         //starts the timer
         if(!playStarted)
         {
-            timer.base=SystemClock.elapsedRealtime()
-            timer.start()
-            Toast.makeText(this,"Game has started. Good Luck!",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Toca el tablero para comenzar. ¡Buena suerte!",Toast.LENGTH_LONG).show()
             playStarted
         }
         val intent=intent
@@ -72,23 +74,26 @@ class MinesweeperGame : AppCompatActivity() {
         {
             //level indicates the difficulty level of game
             val level=intent.getIntExtra("Level",1)
+
             when (level) {
                 //TODO: Incluir el numero de trozos de reliquias
                 0 -> {
                     rows=8
                     columns=8
                     mines= 10
-
+                    establecerCuentaAtras(TIEMPO_FACIL)
                 }
                 1 -> {
                     rows=12
                     columns=12
                     mines= 25
+                    establecerCuentaAtras(TIEMPO_MEDIO)
                 }
                 2 -> {
                     rows=16
                     columns=16
                     mines=40
+                    establecerCuentaAtras(TIEMPO_DIFICIL)
                 }
             }
 
@@ -225,9 +230,6 @@ class MinesweeperGame : AppCompatActivity() {
                     }
                 }
 
-
-
-
             }
             val board : LinearLayout = findViewById(R.id.board)
             board.addView(linearLayout)
@@ -252,7 +254,7 @@ class MinesweeperGame : AppCompatActivity() {
                 }
 
                 else if (status == Status.LOST && it.value == MINE)
-                    it.setBackgroundResource(R.drawable.mine)
+                    it.setBackgroundResource(R.drawable.romano)
                 else if (status == Status.WON && it.value == MINE)
                     it.setBackgroundResource(R.drawable.flag)
                 else
@@ -299,6 +301,7 @@ class MinesweeperGame : AppCompatActivity() {
                     personajeY = y
                     personajeColocado = true
                     reveal(x,y)
+                    cuentaAtras?.start()
                     return true
                 }
 
@@ -328,7 +331,7 @@ class MinesweeperGame : AppCompatActivity() {
                 else{
                     //Si la casilla aun no ha sido revelada, solo podra moverse de una en una (tambien en diagonal) y esta sera revelada
                     //Si toca una mina perdera la partida
-                    if ((Math.abs(personajeX - x) + Math.abs(personajeY - y) == 1)){
+                    if ((Math.abs(personajeX - x) <= 1 && Math.abs(personajeY - y) <= 1)){
                         if(mineboard[x][y].value==MINE) {
                             status = Status.LOST
                             finalResult()
@@ -394,9 +397,7 @@ class MinesweeperGame : AppCompatActivity() {
 
     private fun finalResult() {
         //timer stops as soon as game finishes
-        val timer: Chronometer = findViewById(R.id.timer)
-        timer.stop()
-        val elapsedTime = SystemClock.elapsedRealtime() - timer.base
+        val elapsedTime = 0
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         val currScore = elapsedTime.toInt()
 
@@ -539,12 +540,29 @@ class MinesweeperGame : AppCompatActivity() {
         var coordX = Random(System.nanoTime()).nextInt(0, rows);
         var coordY = Random(System.nanoTime()).nextInt(0,columns);
 
-        while(mineboard[coordX][coordY].isMine){
+        while(mineboard[coordX][coordY].isMine || mineboard[coordX][coordY].getCellValue() != 0){
             coordX = Random(System.nanoTime()).nextInt(0,rows);
             coordY = Random(System.nanoTime()).nextInt(0,columns);
         }
         mineboard[coordX][coordY].isEscalera = true;
         mineboard[coordX][coordY].value= -2;
+    }
+
+    //Funcion que implementa la cuenta atras. Si el tiempo se acaba pierdes
+    private fun establecerCuentaAtras(tiempo : Long){
+        val cuentaAtrasText : TextView = findViewById(R.id.cuentaAtrasText)
+        cuentaAtras = object : CountDownTimer(tiempo, 1000){
+            override fun onTick(tiempoRestante: Long){
+                val minutos : Long = (tiempoRestante/1000) / 60
+                val segundos : Long = (tiempoRestante/1000) % 60
+
+                cuentaAtrasText.text = String.format(Locale.getDefault(), "%02d:%02d", minutos, segundos)
+            }
+            override fun onFinish() {
+                status = Status.LOST
+                finalResult()
+            }
+        }
     }
 
 

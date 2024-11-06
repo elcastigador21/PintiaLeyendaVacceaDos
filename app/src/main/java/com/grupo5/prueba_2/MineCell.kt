@@ -9,27 +9,27 @@ class MineCell @JvmOverloads constructor(
 ) : AppCompatButton(context, attrs, defStyleAttr) {
 
 
-    var value :Int = 0
-    var isRevealed:Boolean = false
+    var value : Int = 0
+    var isRevealed: Boolean = false
     var isFlagged = false
     var isMine = false
     var isEscalera = false
     var valorOriginal = 0
 
     //TODO: geters y seters
-    public fun getValue() : Int {
+    public fun getCellValue() : Int {
         return value
     }
 
-    public fun getIsRevealed() : Boolean {
+    public fun getCellIsRevealed() : Boolean {
         return isRevealed
     }
 
-    public fun getIsFlagged() : Boolean {
+    public fun getCellIsFlagged() : Boolean {
         return isFlagged
     }
 
-    public fun getIsMine() : Boolean {
+    public fun getCellIsMine() : Boolean {
         return isMine
     }
 
@@ -37,7 +37,7 @@ class MineCell @JvmOverloads constructor(
         return isEscalera
     }
 
-    public fun getValorOriginal() : Int {
+    public fun getCellValorOriginal() : Int {
         return valorOriginal
     }
 

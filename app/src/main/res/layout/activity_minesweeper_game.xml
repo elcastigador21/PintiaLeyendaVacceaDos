@@ -22,15 +22,16 @@
         app:layout_constraintTop_toBottomOf="@id/guideline4"
         app:srcCompat="@drawable/restart" />
 
-    <Chronometer
-        android:id="@+id/timer"
+    <TextView
+        android:id="@+id/cuentaAtrasText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/timerpic"
         app:layout_constraintStart_toStartOf="@+id/timerpic"
-        app:layout_constraintTop_toBottomOf="@+id/timerpic" />
+        app:layout_constraintTop_toBottomOf="@+id/timerpic"
+        android:text = "00:00"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/instructions"
@@ -89,7 +90,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
-        android:text="@string/mines_left"
+        android:text="@string/romans_left"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
