@@ -1,6 +1,5 @@
 package com.grupo5.prueba_2
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,6 +7,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +17,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //make custom directs user to the activity where user can input his own dimensions of the board
-        val makeCustom : Button = findViewById(R.id.make_custom)
+        val makeCustom : Button = findViewById(R.id.Laboratorio)
         makeCustom.setOnClickListener{
             val intent = Intent(this@MainActivity, MakeCustomBoard::class.java)
             startActivity(intent)
         }
-        var level=-1
+
+        val mapa : ConstraintLayout = findViewById(R.id.mapa)
+        mapa.setOnClickListener{
+            val intent = Intent(this@MainActivity, gameWon::class.java)
+            startActivity(intent)
+        }
+        /*var level=-1
         //self indicates the board to be created itself by the system as per the difficulty chosen by user
         val boardType= "self"
         val easy : RadioButton = findViewById(R.id.easy)
@@ -38,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             level=2
         }
         // start game will take the user to the game screen but will show an alert dialog ton the user if no difficulty is chosen,instructing the user to do so
-        val startGame : Button = findViewById(R.id.start_game)
+        val startGame : Button = findViewById(R.id.Mapa)
         startGame.setOnClickListener {
             if(level==-1) {
                 val builder= AlertDialog.Builder(this)
@@ -80,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             startActivity(intent)
-        }
+        }*/
 
 
     }
