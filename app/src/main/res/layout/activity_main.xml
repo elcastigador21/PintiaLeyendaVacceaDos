@@ -11,7 +11,7 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mapa"
+        android:id="@+id/pantallaInicial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/pintia"
@@ -41,9 +41,8 @@
             android:layout_width="139dp"
             android:layout_height="47dp"
             android:layout_marginStart="265dp"
-            android:layout_marginTop="276dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="17dp"
+            android:layout_marginBottom="2dp"
             android:background="#B4FFFFFF"
             android:text="@string/make_custom_board"
             android:textColor="#000000"
@@ -54,48 +53,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.941"
             app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@id/toca_para_jugar" />
 
         <TextView
             android:id="@+id/toca_para_jugar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/touch_to_play"
-            android:textColor="#95000000"
+            android:textColor="#000000"
             android:textSize="34sp"
             android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/gamelabel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gamelabel"
-            app:layout_constraintVertical_bias="0.178" />
+            app:layout_constraintVertical_bias="0.63" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="230dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="68dp"
-            android:layout_marginEnd="378dp"
-            android:background="#A9FFFFFF"
-            android:text="@string/Sociales"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toStartOf="@+id/Laboratorio"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toca_para_jugar" />
+
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="230dp"
             android:layout_height="22dp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="40dp"
             android:background="#FFFFFF"
             android:backgroundTint="#A9FFFFFF"
             android:text="@string/correo"
@@ -103,7 +85,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@id/toca_para_jugar" />
 
         <TextView
             android:id="@+id/textView4"
