@@ -17,11 +17,7 @@
             android:exported="true"
             android:screenOrientation="landscape"
             android:resizeableActivity="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MinesweeperGame"
@@ -34,6 +30,30 @@
             android:exported="true"
             android:screenOrientation="landscape"
             android:resizeableActivity="false">
+        </activity>
+        <activity
+
+            android:name=".SelectLevel"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:resizeableActivity="false"
+
+            tools:ignore="DiscouragedApi"> <!--Esto es para que no salga lo tachado-->
+        </activity>
+        <activity
+
+            android:name=".SelectWorld"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:resizeableActivity="false"
+
+            tools:ignore="DiscouragedApi"> <!--Esto es para que no salga lo tachado-->
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
