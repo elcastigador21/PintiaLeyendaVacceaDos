@@ -210,7 +210,7 @@ class MinesweeperGame : AppCompatActivity() {
                 id++
                 button.layoutParams=params1
                 params1.weight=1.0F
-                button.setBackgroundResource(R.drawable.unrevealed)
+                button.setBackgroundResource(R.drawable.ladrillo)
                 // params1.rightMargin=5
 
                 linearLayout.addView(button)
@@ -366,7 +366,7 @@ class MinesweeperGame : AppCompatActivity() {
                     }
                     else if(isFlagged) {
                         isFlagged=false
-                        setBackgroundResource(R.drawable.unrevealed)
+                        setBackgroundResource(R.drawable.ladrillo)
                         flaggedmines--
                         minesLeftinfo.text= (mines-flaggedmines).toString()
                         return true
