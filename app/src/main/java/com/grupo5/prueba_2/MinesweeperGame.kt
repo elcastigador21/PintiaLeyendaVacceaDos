@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Locale
@@ -40,9 +41,7 @@ class MinesweeperGame : AppCompatActivity() {
     private var personajeY = -1
     private var cuentaAtras : CountDownTimer? = null
 
-    //TODO: Cambiar casillas por ladrillos de adobe
     //TODO: Poner variable que controle las reliquias
-
 
     companion object {
         const val MINE = -1
@@ -70,8 +69,7 @@ class MinesweeperGame : AppCompatActivity() {
         val intent=intent
         val boardType= intent.getStringExtra("boardType")
         // self represents the board with the difficulty chosen by user
-        if(boardType=="self")
-        {
+        if(boardType=="self") {
             //level indicates the difficulty level of game
             val level=intent.getIntExtra("Level",1)
 
@@ -101,13 +99,14 @@ class MinesweeperGame : AppCompatActivity() {
         //custom is the board created by the user
         else if(boardType=="custom")
         {
-            with(intent)
-            {
+            with(intent) {
                 rows= getIntExtra("rows",9)
                 columns= getIntExtra("columns",9)
                 mines= getIntExtra("mines",10)
             }
-        }//mines left will show the number of mines not flagged
+        }
+
+        //mines left will show the number of mines not flagged
         val minesLeftinfo : TextView = findViewById(R.id.minesLeftinfo)
         val instructions : Button = findViewById(R.id.instructions)
         val restart : Button = findViewById(R.id.restart)
@@ -117,12 +116,11 @@ class MinesweeperGame : AppCompatActivity() {
         //once user clicks the icon of instructions an alert dialog will be shown to user giving the required game instructions
         instructions.setOnClickListener {
             val builder= AlertDialog.Builder(this)
-            with(builder)
-            {
+            with(builder) {
 
                 //TODO:Cambiar mensaje
 
-                setTitle("Game Instructions")
+                setTitle("Instrucciones del juego")
                 setMessage(
                     "Hi! Welcome to the Minesweeper Game." +
                             "Here, you are provided with a board having certain no. of mines hidden in it."+
@@ -145,10 +143,11 @@ class MinesweeperGame : AppCompatActivity() {
             instructions.show()
         }
         // on clicking restart icon,ser will be given an alert dialog confirming the action and if clicked yes, game will restart again
+
         restart.setOnClickListener {
             val builder= AlertDialog.Builder(this)
-            with(builder)
-            {
+            with(builder) {
+
                 setTitle("Restart the game")
                 setMessage("The game is in progress. Are you sure you want to restart?")
                 setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
@@ -164,21 +163,26 @@ class MinesweeperGame : AppCompatActivity() {
             alert.show()
         }
 
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed(){
+                ponerDialogoAtras()
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this, callback)
+
     }
 
 
     private fun createBoard() {
         mineboard= Array(rows){Array(columns){MineCell(this)}}
-        val params1= LinearLayout.LayoutParams(
-            0, LinearLayout.LayoutParams.MATCH_PARENT
-        )
+        val params1= LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT)
 
-        val params2= LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, 0
-        )
+        val params2= LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0)
+
         val choice : ImageButton = findViewById(R.id.choice)
         var id=1
-        //on clicking choice button user can switch its moves betwenn reveal and flag
+        //on clicking choice button user can switch its moves between reveal and flag
         choice.setOnClickListener {
 
             if(toMove== reveal)
@@ -193,6 +197,7 @@ class MinesweeperGame : AppCompatActivity() {
                 choice.setImageResource(R.drawable.pala)
             }
         }
+
         for(i in 0 until rows)
         {
             val linearLayout= LinearLayout(this)
@@ -239,6 +244,7 @@ class MinesweeperGame : AppCompatActivity() {
 
 
     }
+
     //used to display the cells
     private fun displayBoard() {
         mineboard.forEach { row ->
@@ -253,19 +259,20 @@ class MinesweeperGame : AppCompatActivity() {
                         it.setBackgroundResource(R.drawable.flag)
                 }
 
-                else if (status == Status.LOST && it.value == MINE)
-                    it.setBackgroundResource(R.drawable.romano)
-                else if (status == Status.WON && it.value == MINE)
-                    it.setBackgroundResource(R.drawable.flag)
+                //else if (status == Status.LOST && it.value == MINE)
+                    //it.setBackgroundResource(R.drawable.romano)
+                //else if (status == Status.WON && it.value == MINE)
+                    //it.setBackgroundResource(R.drawable.flag)
                 else
                     it.text=" "
             }
 
         }
     }
+
     private fun setImage(minecell: MineCell) {
-        with(minecell)
-        {
+
+        with(minecell) {
             when (value) {
                 -3 -> setBackgroundResource(R.drawable.protagonista)
                 -2 -> setBackgroundResource(R.drawable.escalera)
@@ -279,10 +286,7 @@ class MinesweeperGame : AppCompatActivity() {
                 7 -> setBackgroundResource(R.drawable.seven)
                 8 -> setBackgroundResource(R.drawable.eight)
             }
-
-
         }
-
     }
 
 
@@ -308,10 +312,7 @@ class MinesweeperGame : AppCompatActivity() {
                 //El personaje se podra mover libremente por las casillas ya reveladas, si selecciona la escalera
                 //ganara la partida
                 if(mineboard[x][y].isRevealed){
-                    if(mineboard[x][y].isFlagged){
-                        return false
-                    }
-                    else if (mineboard[x][y].value == ESCALERA){
+                    if (mineboard[x][y].value == ESCALERA){
                         status = Status.WON
                         finalResult()
                         return true
@@ -332,6 +333,9 @@ class MinesweeperGame : AppCompatActivity() {
                     //Si la casilla aun no ha sido revelada, solo podra moverse de una en una (tambien en diagonal) y esta sera revelada
                     //Si toca una mina perdera la partida
                     if ((Math.abs(personajeX - x) <= 1 && Math.abs(personajeY - y) <= 1)){
+                        if(mineboard[x][y].isFlagged){
+                            return false
+                        }
                         if(mineboard[x][y].value==MINE) {
                             status = Status.LOST
                             finalResult()
@@ -384,22 +388,23 @@ class MinesweeperGame : AppCompatActivity() {
                             return true
                         }
                     }
-
                 }
-
             }
-
         }
-
         return true
     }
 
 
     private fun finalResult() {
         //timer stops as soon as game finishes
+        cuentaAtras?.cancel()
+
+        //TODO: Tiene que escribir en el json
+
         val elapsedTime = 0
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         val currScore = elapsedTime.toInt()
+
 
         fastestTime= sharedPref.getInt("BestScore", Integer.MAX_VALUE)
         lastGameTime = sharedPref.getInt("LastTime", Integer.MAX_VALUE)
@@ -457,6 +462,7 @@ class MinesweeperGame : AppCompatActivity() {
         }
     }
 
+
     // isComplete() function checks for the win conditions
     private fun isComplete():Boolean{
         var minesMarked=true
@@ -495,28 +501,25 @@ class MinesweeperGame : AppCompatActivity() {
         }
     }
 
-    // if the user clicks back button, an alert dialog will be shown confirming the action
-    override fun onBackPressed() {
-        val builder = AlertDialog.Builder(this)
-        with(builder) {
+
+    //Cuadro de dialogo que se muestra cuando el usuario pulsa el boton atras del telefono
+    private fun ponerDialogoAtras(){
+        val dialogo = AlertDialog.Builder(this)
+        dialogo.apply{
             setTitle(getString(R.string.exit_game))
             setMessage(getString(R.string.abort))
-            setPositiveButton(
-                "Yes"
-            ) { dialog, which ->
+            setPositiveButton("Yes") { dialog, which ->
                 finalResult()
-                super.onBackPressed() }
-            setNegativeButton(
-                "No"
-            ) { dialog, which ->
-
+                val intent = Intent(this@MinesweeperGame, SelectWorld::class.java)
+                startActivity(intent)
+                finish()
+                }
+            setNegativeButton("No") { dialog, which ->
             }
-
-
-        }
-        val alert= builder.create()
-        alert.show()
+        }.create().show()
     }
+
+
     //mines are set randomly
     private fun setupmines(i: Int, j: Int) {
         var m=1
@@ -548,6 +551,7 @@ class MinesweeperGame : AppCompatActivity() {
         mineboard[coordX][coordY].value= -2;
     }
 
+
     //Funcion que implementa la cuenta atras. Si el tiempo se acaba pierdes
     private fun establecerCuentaAtras(tiempo : Long){
         val cuentaAtrasText : TextView = findViewById(R.id.cuentaAtrasText)
@@ -566,8 +570,6 @@ class MinesweeperGame : AppCompatActivity() {
     }
 
 
-
-
     private fun updateNeighbours(  x: Int, y: Int) {
         for (i: Int in movement) {
             for (j in movement) {
@@ -578,7 +580,9 @@ class MinesweeperGame : AppCompatActivity() {
             }
         }
     }
+    
 }
+
 enum class Status{
     WON,
     ONGOINING,

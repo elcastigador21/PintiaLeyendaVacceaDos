@@ -34,10 +34,10 @@
     <string name="romans_left">Romanos:</string>
     <string name="_0">0</string>
     <string name="win_message">Has ganado el juego 😎</string>
-    <string name="congratulations">Congratulations!!</string>
+    <string name="congratulations">¡¡Enhorabuena!!</string>
     <string name="result">Result</string>
     <string name="lost_message">Perdiste ☹</string>
-    <string name="game_loss">You have Lost the game</string>
+    <string name="game_loss">Los romanos han conquistado Pintia</string>
     <string name="stats_label">View your stats</string>
     <string name="continue_playing">Continue Playing</string>
     <string name="exit">Exit</string>
