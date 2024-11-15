@@ -52,7 +52,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.941"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/twitter"
             app:layout_constraintTop_toBottomOf="@id/toca_para_jugar" />
 
         <TextView
@@ -70,51 +70,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="0.63" />
 
-
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="230dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="40dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#A9FFFFFF"
-            android:text="@string/correo"
-            android:textColor="#3F51B5"
-            android:textSize="16sp"
+        <ImageButton
+            android:id="@+id/web"
+            android:layout_width="70dp"
+            android:layout_height="67dp"
+            android:layout_marginStart="12dp"
+            android:contentDescription="@string/choice_to_flag_or_to_reveal"
+            android:scaleType="fitStart"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toca_para_jugar" />
+            app:layout_constraintTop_toBottomOf="@id/toca_para_jugar"
+            app:srcCompat="@drawable/web_box"
+            tools:layout_editor_absoluteX="108dp" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="230dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="16dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#A9FFFFFF"
-            android:text="@string/twitter"
-            android:textColor="#3F51B5"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="230dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="28dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#A9FFFFFF"
-            android:text="@string/facebook"
-            android:textColor="#3F51B5"
-            android:textSize="16sp"
+        <ImageButton
+            android:id="@+id/facebook"
+            android:layout_width="70dp"
+            android:layout_height="67dp"
+            android:contentDescription="@string/choice_to_flag_or_to_reveal"
+            android:scaleType="fitStart"
+            app:layout_constraintStart_toEndOf="@id/web"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@id/toca_para_jugar"
+            app:srcCompat="@drawable/facebook"
+            tools:layout_editor_absoluteX="108dp" />
+
+        <ImageButton
+            android:id="@+id/twitter"
+            android:layout_width="70dp"
+            android:layout_height="67dp"
+            android:layout_marginEnd="30dp"
+            android:contentDescription="@string/choice_to_flag_or_to_reveal"
+            android:scaleType="fitStart"
+            app:layout_constraintStart_toEndOf="@id/facebook"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toca_para_jugar"
+            app:srcCompat="@drawable/twitter"
+            tools:layout_editor_absoluteX="108dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

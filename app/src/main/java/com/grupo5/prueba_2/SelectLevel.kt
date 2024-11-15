@@ -19,7 +19,6 @@ class SelectLevel : AppCompatActivity(){
         facil.setOnClickListener{
             val intent = Intent(this, MinesweeperGame::class.java).apply {
                 putExtra("Level", nivel)
-                putExtra("boardType", "self")
             }
             startActivity(intent)
         }
@@ -29,7 +28,6 @@ class SelectLevel : AppCompatActivity(){
         medio.setOnClickListener{
             val intent = Intent(this, MinesweeperGame::class.java).apply {
                 putExtra("Level", nivel)
-                putExtra("boardType", "self")
             }
             startActivity(intent)
         }
@@ -39,7 +37,6 @@ class SelectLevel : AppCompatActivity(){
         dificil.setOnClickListener{
             val intent = Intent(this, MinesweeperGame::class.java).apply {
                 putExtra("Level", nivel)
-                putExtra("boardType", "self")
             }
             startActivity(intent)
         }

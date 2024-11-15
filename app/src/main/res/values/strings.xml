@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Minesweeper</string>
+    <string name="app_name">Pintia:la leyenda Vaccea</string>
     <string name="Sociales">Redes sociales</string>
-    <string name="correo">cevfw@uva.es</string>
-    <string name="facebook">www.facebook.com/CEVFW</string>
-    <string name="twitter">www.twitter.com/ArchaeoPintia</string>
+    <string name="web">https://pintiavaccea.es</string>
+    <string name="facebook">https://www.facebook.com/CEVFW/</string>
+    <string name="twitter">https://www.twitter.com/ArchaeoPintia/</string>
     <string name="touch_to_play">Toca cualquier lugar para jugar</string>
     <string name="minesweeper">Pintia: La leyenda Vaccea</string>
     <string name="easy">Easy</string>

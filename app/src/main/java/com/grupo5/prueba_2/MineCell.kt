@@ -10,13 +10,15 @@ class MineCell @JvmOverloads constructor(
 
 
     var value : Int = 0
-    var isRevealed: Boolean = false
-    var isFlagged = false
-    var isMine = false
-    var isEscalera = false
-    var valorOriginal = 0
+    var valorOriginal : Int = 0
+
+    var isRevealed : Boolean = false
+
+    var isFlagged : Boolean = false
 
     //TODO: geters y seters
+
+
     public fun getCellValue() : Int {
         return value
     }
@@ -29,16 +31,16 @@ class MineCell @JvmOverloads constructor(
         return isFlagged
     }
 
-    public fun getCellIsMine() : Boolean {
-        return isMine
-    }
-
-    public fun getIsEscalera() : Boolean {
-        return isEscalera
+    public fun isEscalera() : Boolean {
+        return (getCellValue() == -2)
     }
 
     public fun getCellValorOriginal() : Int {
         return valorOriginal
+    }
+
+    public fun isMine() : Boolean{
+        return (getCellValue() == -1)
     }
 
 }

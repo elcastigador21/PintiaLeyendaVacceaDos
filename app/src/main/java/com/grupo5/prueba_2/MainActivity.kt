@@ -2,14 +2,12 @@ package com.grupo5.prueba_2
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.Button
-import android.widget.RadioButton
-import android.widget.ScrollView
+import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 
@@ -42,8 +40,27 @@ class MainActivity : AppCompatActivity() {
             repeatMode = AlphaAnimation.REVERSE
             repeatCount = AlphaAnimation.INFINITE
         }
-        //Ver si se puede poner una lambda
         tocaParaJugar.startAnimation(animacionParpadeo)
 
+        val web : ImageButton = findViewById(R.id.web)
+        web.setOnClickListener{
+            val url = getString(R.string.web)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+
+        val facebook : ImageButton = findViewById(R.id.facebook)
+        facebook.setOnClickListener{
+            val url = getString(R.string.facebook)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+
+        val twitter : ImageButton = findViewById(R.id.twitter)
+        twitter.setOnClickListener{
+            val url = getString(R.string.twitter)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
     }
 }

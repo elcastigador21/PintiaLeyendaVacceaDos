@@ -6,9 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.SystemClock
 import android.widget.Button
-import android.widget.Chronometer
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -27,14 +25,15 @@ class MinesweeperGame : AppCompatActivity() {
     private var status= Status.ONGOINING
     private var rows=0
     private var columns=0
-    private var mines=0
+    private var romanos=0
     private var mineboard= Array(rows){Array(columns){MineCell(this)}}
     private var playStarted=false
-    private  var played=0
-    private  var won=0
-    private  var lost =0
+    private var played=0
+    private var won=0
+    private var lost=0
     private var lastGameTime=Integer.MAX_VALUE
     private var fastestTime=Integer.MAX_VALUE
+    private var level = -1
 
     private var personajeColocado = false
     private var personajeX = -1
@@ -44,12 +43,12 @@ class MinesweeperGame : AppCompatActivity() {
     //TODO: Poner variable que controle las reliquias
 
     companion object {
-        const val MINE = -1
+        const val ROMANO = -1
         const val ESCALERA = -2
         const val PERSONAJE = -3
-        const val TIEMPO_FACIL : Long = 400_000
-        const val TIEMPO_MEDIO : Long = 600_000
-        const val TIEMPO_DIFICIL : Long = 700_000
+        const val TIEMPO_FACIL : Long = 400_000     //
+        const val TIEMPO_MEDIO : Long = 600_000     // Faltan de ajustar
+        const val TIEMPO_DIFICIL : Long = 700_000   //
         const val reveal="reveal"
         const val flag= "flag"
         val movement= arrayOf(-1,0,1)
@@ -61,59 +60,45 @@ class MinesweeperGame : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minesweeper_game)
         //starts the timer
-        if(!playStarted)
-        {
+        if(!playStarted) {
             Toast.makeText(this,"Toca el tablero para comenzar. ¡Buena suerte!",Toast.LENGTH_LONG).show()
             playStarted
         }
         val intent=intent
-        val boardType= intent.getStringExtra("boardType")
-        // self represents the board with the difficulty chosen by user
-        if(boardType=="self") {
-            //level indicates the difficulty level of game
-            val level=intent.getIntExtra("Level",1)
+        //level indicates the difficulty level of game
+        level=intent.getIntExtra("Level",1)
 
-            when (level) {
-                //TODO: Incluir el numero de trozos de reliquias
-                0 -> {
-                    rows=8
-                    columns=8
-                    mines= 10
-                    establecerCuentaAtras(TIEMPO_FACIL)
-                }
-                1 -> {
-                    rows=12
-                    columns=12
-                    mines= 25
-                    establecerCuentaAtras(TIEMPO_MEDIO)
-                }
-                2 -> {
-                    rows=16
-                    columns=16
-                    mines=40
-                    establecerCuentaAtras(TIEMPO_DIFICIL)
-                }
+        when (level) {
+            //TODO: Incluir el numero de trozos de reliquias
+            0 -> {
+                rows=8
+                columns=8
+                romanos= 10
+                establecerCuentaAtras(TIEMPO_FACIL)
             }
-
-        }
-        //custom is the board created by the user
-        else if(boardType=="custom")
-        {
-            with(intent) {
-                rows= getIntExtra("rows",9)
-                columns= getIntExtra("columns",9)
-                mines= getIntExtra("mines",10)
+            1 -> {
+                rows=12
+                columns=12
+                romanos= 25
+                establecerCuentaAtras(TIEMPO_MEDIO)
+            }
+            2 -> {
+                rows=16
+                columns=16
+                romanos=40
+                establecerCuentaAtras(TIEMPO_DIFICIL)
             }
         }
+
 
         //mines left will show the number of mines not flagged
         val minesLeftinfo : TextView = findViewById(R.id.minesLeftinfo)
         val instructions : Button = findViewById(R.id.instructions)
         val restart : Button = findViewById(R.id.restart)
-        minesLeftinfo.text= mines.toString()
-        //create board function will create the layout as per dimensions
+        minesLeftinfo.text= romanos.toString()
+        //Se crea un tablero con las dimensiones del nivel de dificultad escogido
         createBoard()
-        //once user clicks the icon of instructions an alert dialog will be shown to user giving the required game instructions
+        //Cuando el usuario toca el icono de instrucciones se muestra un cuadro de dialogo con las instrucciones del juego
         instructions.setOnClickListener {
             val builder= AlertDialog.Builder(this)
             with(builder) {
@@ -148,9 +133,9 @@ class MinesweeperGame : AppCompatActivity() {
             val builder= AlertDialog.Builder(this)
             with(builder) {
 
-                setTitle("Restart the game")
-                setMessage("The game is in progress. Are you sure you want to restart?")
-                setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
+                setTitle("Reiniciar juego")
+                setMessage("La partida esta en curso. ¿Seguro que quieres reiniciar?")
+                setPositiveButton("Si", DialogInterface.OnClickListener { dialog, which ->
                     val intents= getIntent()
                     finish()
                     startActivity(intents)
@@ -185,29 +170,25 @@ class MinesweeperGame : AppCompatActivity() {
         //on clicking choice button user can switch its moves between reveal and flag
         choice.setOnClickListener {
 
-            if(toMove== reveal)
-            {
+            if(toMove== reveal) {
                 toMove= flag
                 choice.setImageResource(R.drawable.flag)
 
             }
-            else
-            {
+            else {
                 toMove= reveal
                 choice.setImageResource(R.drawable.pala)
             }
         }
 
-        for(i in 0 until rows)
-        {
+        for(i in 0 until rows) {
             val linearLayout= LinearLayout(this)
             linearLayout.orientation= LinearLayout.HORIZONTAL
             linearLayout.layoutParams=params2
             params2.weight=1.0F
 
             //  params2.bottomMargin= 5
-            for(j in 0 until columns)
-            {
+            for(j in 0 until columns) {
                 val button= MineCell(this)
                 mineboard[i][j]=button
                 button.id=id
@@ -222,26 +203,26 @@ class MinesweeperGame : AppCompatActivity() {
                 button.setOnClickListener {
                     // if the user has clicked the cell first time , the mines will be setup in the game ensuring the first clicked cell isnt a mine/bomb.
                     if (isFirstmove) {
-                        isFirstmove = false
                         setupmines(i, j)
-                        ponerEscalera()
                         //TODO: Poner las reliquias en el tablero
                     }
+
                     move(toMove, i, j)
+
+                    if(isFirstmove){
+                        isFirstmove = false
+                        ponerEscalera()
+                    }
                     displayBoard()
                     if(isComplete() && status!=Status.LOST) {
                         status = Status.WON
                         finalResult()
                     }
                 }
-
             }
             val board : LinearLayout = findViewById(R.id.board)
             board.addView(linearLayout)
-
-
         }
-
 
     }
 
@@ -253,7 +234,7 @@ class MinesweeperGame : AppCompatActivity() {
                     setImage(it)
                 else if (it.isFlagged) {
 
-                    if (status == Status.LOST && !it.isMine)
+                    if (status == Status.LOST && !it.isMine())
                         it.setBackgroundResource(R.drawable.crossedflag)
                     else
                         it.setBackgroundResource(R.drawable.flag)
@@ -276,6 +257,7 @@ class MinesweeperGame : AppCompatActivity() {
             when (value) {
                 -3 -> setBackgroundResource(R.drawable.protagonista)
                 -2 -> setBackgroundResource(R.drawable.escalera)
+                -1 -> setBackgroundResource(R.drawable.romano)
                 0 -> setBackgroundResource(R.drawable.opened)
                 1 -> setBackgroundResource(R.drawable.one)
                 2 -> setBackgroundResource(R.drawable.two)
@@ -328,6 +310,11 @@ class MinesweeperGame : AppCompatActivity() {
                         reveal(x,y)
                         return true
                     }
+                    else if(mineboard[x][y].value == -1){
+                        val cuentaAtrasText : TextView = findViewById(R.id.cuentaAtrasText)
+                        reducirTiempo(cuentaAtrasText)
+                        return true
+                    }
                 }
                 else{
                     //Si la casilla aun no ha sido revelada, solo podra moverse de una en una (tambien en diagonal) y esta sera revelada
@@ -336,9 +323,10 @@ class MinesweeperGame : AppCompatActivity() {
                         if(mineboard[x][y].isFlagged){
                             return false
                         }
-                        if(mineboard[x][y].value==MINE) {
-                            status = Status.LOST
-                            finalResult()
+                        if(mineboard[x][y].value==ROMANO){
+                            val cuentaAtrasText : TextView = findViewById(R.id.cuentaAtrasText)
+                            reducirTiempo(cuentaAtrasText)
+                            reveal(x,y)
                             return true
                         }
                         else if (mineboard[x][y].value >= 0) {
@@ -372,11 +360,11 @@ class MinesweeperGame : AppCompatActivity() {
                         isFlagged=false
                         setBackgroundResource(R.drawable.ladrillo)
                         flaggedmines--
-                        minesLeftinfo.text= (mines-flaggedmines).toString()
+                        minesLeftinfo.text= (romanos-flaggedmines).toString()
                         return true
                     }
                     else {
-                        if(flaggedmines==mines) {
+                        if(flaggedmines==romanos) {
                             Toast.makeText(this@MinesweeperGame,"You cannot flag more mines",Toast.LENGTH_SHORT).show()
                             return false
                         }
@@ -384,7 +372,7 @@ class MinesweeperGame : AppCompatActivity() {
                             isFlagged=true
                             flaggedmines++
                             setBackgroundResource(R.drawable.flag)
-                            minesLeftinfo.text= (mines-flaggedmines).toString()
+                            minesLeftinfo.text= (romanos-flaggedmines).toString()
                             return true
                         }
                     }
@@ -469,11 +457,11 @@ class MinesweeperGame : AppCompatActivity() {
         var valuesRevealed=true
         mineboard.forEach{ row->
             row.forEach{
-                if(it.value==MINE) {
+                if(it.value==ROMANO) {
                     if(!it.isFlagged)
                         minesMarked=false
                 }
-                else if (it.value != MINE) {
+                else if (it.value != ROMANO) {
                     if(!it.isRevealed)
                         valuesRevealed=false
                 }
@@ -488,9 +476,9 @@ class MinesweeperGame : AppCompatActivity() {
         return  minesMarked && valuesRevealed
     }
 
-
+    //Ahora tambien revela a los romanos
     private fun reveal(x: Int,y:Int) {
-        if(!mineboard[x][y].isRevealed && !mineboard[x][y].isFlagged && mineboard[x][y].value!=-1) {
+        if(!mineboard[x][y].isRevealed && !mineboard[x][y].isFlagged) {
             mineboard[x][y].isRevealed=true
             if(mineboard[x][y].value==0) {
                 for(i in movement)
@@ -508,14 +496,15 @@ class MinesweeperGame : AppCompatActivity() {
         dialogo.apply{
             setTitle(getString(R.string.exit_game))
             setMessage(getString(R.string.abort))
-            setPositiveButton("Yes") { dialog, which ->
+            setPositiveButton("Si") { dialog, which ->
                 finalResult()
-                val intent = Intent(this@MinesweeperGame, SelectWorld::class.java)
+                val intent = Intent(this@MinesweeperGame, SelectLevel::class.java).apply{
+                    putExtra("Mundo", level)
+                }
                 startActivity(intent)
                 finish()
-                }
-            setNegativeButton("No") { dialog, which ->
             }
+            setNegativeButton("No") { dialog, which -> }
         }.create().show()
     }
 
@@ -523,16 +512,15 @@ class MinesweeperGame : AppCompatActivity() {
     //mines are set randomly
     private fun setupmines(i: Int, j: Int) {
         var m=1
-        while(m<=mines) {
+        while(m<=romanos) {
             val x= Random(System.nanoTime()).nextInt(0,rows)
             val y= Random(System.nanoTime()).nextInt(0,columns)
-            if(((x in i-1..i+1)&&(y in j-1..j+1))||mineboard[x][y].isMine) {
+            if(((x in i-1..i+1)&&(y in j-1..j+1))||mineboard[x][y].isMine()) {
                 continue
             }
             else {
                 mineboard[x][y].value = -1
             }
-            mineboard[x][y].isMine=true
             updateNeighbours(x,y)
             m++
         }
@@ -540,14 +528,16 @@ class MinesweeperGame : AppCompatActivity() {
 
     //Pone la escalera de salida del nivel en una celda libre
     private fun ponerEscalera(){
-        var coordX = Random(System.nanoTime()).nextInt(0, rows);
-        var coordY = Random(System.nanoTime()).nextInt(0,columns);
+        var coordX : Int
+        var coordY : Int
 
-        while(mineboard[coordX][coordY].isMine || mineboard[coordX][coordY].getCellValue() != 0){
+        do{
             coordX = Random(System.nanoTime()).nextInt(0,rows);
             coordY = Random(System.nanoTime()).nextInt(0,columns);
-        }
-        mineboard[coordX][coordY].isEscalera = true;
+
+        } while(mineboard[coordX][coordY].isMine() || mineboard[coordX][coordY].getCellValue() != 0)
+
+
         mineboard[coordX][coordY].value= -2;
     }
 
@@ -567,6 +557,26 @@ class MinesweeperGame : AppCompatActivity() {
                 finalResult()
             }
         }
+    }
+
+    //Reduce el tiempo al tocar un romano
+    private fun reducirTiempo(cuentaAtrasText : TextView){
+        cuentaAtras?.cancel()
+
+        var tiempo : String = cuentaAtrasText.text.toString()
+        var minutos: Long = tiempo.subSequence(0,2).toString().toLong()
+        var segundos: Long = tiempo.subSequence(3,5).toString().toLong()
+
+        minutos = minutos * 60 * 1000
+        segundos = segundos * 1000
+
+        var milisegundos : Long = minutos + segundos
+
+        milisegundos -= 5000 * (level+1)
+
+        establecerCuentaAtras(milisegundos)
+
+        cuentaAtras?.start()
     }
 
 
