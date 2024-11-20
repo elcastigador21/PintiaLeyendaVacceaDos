@@ -22,7 +22,7 @@ class MinesweeperGame : AppCompatActivity() {
     private var flaggedmines=0
 
     private var isFirstmove=true
-    private var status= Status.ONGOINING
+    private var status= Status.ONGOING
     private var rows=0
     private var columns=0
     private var romanos=0
@@ -203,7 +203,7 @@ class MinesweeperGame : AppCompatActivity() {
                 button.setOnClickListener {
                     // if the user has clicked the cell first time , the mines will be setup in the game ensuring the first clicked cell isnt a mine/bomb.
                     if (isFirstmove) {
-                        setupmines(i, j)
+                        setUpMines(i, j)
                         //TODO: Poner las reliquias en el tablero
                     }
 
@@ -272,115 +272,116 @@ class MinesweeperGame : AppCompatActivity() {
     }
 
 
-    // reveals or flags the cell as per option chosen by user
-    private fun move(choice:String, x: Int, y:Int): Boolean{
-        val minesLeftinfo : TextView = findViewById(R.id.minesLeftinfo)
+    //Revela o marca una celda dependiendo de la opcion elegida por el usuario
+    private fun move(choice:String, x: Int, y:Int){
+
         when(choice){
             reveal -> {
-
-                //TODO: que pasa si se toca una reliquia
-
-                //Si es el primer movimiento se coloca al personaje
-                if(!personajeColocado){
-                    mineboard[x][y].value = PERSONAJE
-                    personajeX = x
-                    personajeY = y
-                    personajeColocado = true
-                    reveal(x,y)
-                    cuentaAtras?.start()
-                    return true
-                }
-
-                //El personaje se podra mover libremente por las casillas ya reveladas, si selecciona la escalera
-                //ganara la partida
-                if(mineboard[x][y].isRevealed){
-                    if (mineboard[x][y].value == ESCALERA){
-                        status = Status.WON
-                        finalResult()
-                        return true
-                    }
-                    else if(mineboard[x][y].value >= 0){
-                        mineboard[x][y].valorOriginal = mineboard[x][y].value
-                        mineboard[personajeX][personajeY].value = mineboard[personajeX][personajeY].valorOriginal
-
-                        personajeX = x
-                        personajeY = y
-
-                        mineboard[x][y].value = PERSONAJE
-                        reveal(x,y)
-                        return true
-                    }
-                    else if(mineboard[x][y].value == -1){
-                        val cuentaAtrasText : TextView = findViewById(R.id.cuentaAtrasText)
-                        reducirTiempo(cuentaAtrasText)
-                        return true
-                    }
-                }
-                else{
-                    //Si la casilla aun no ha sido revelada, solo podra moverse de una en una (tambien en diagonal) y esta sera revelada
-                    //Si toca una mina perdera la partida
-                    if ((Math.abs(personajeX - x) <= 1 && Math.abs(personajeY - y) <= 1)){
-                        if(mineboard[x][y].isFlagged){
-                            return false
-                        }
-                        if(mineboard[x][y].value==ROMANO){
-                            val cuentaAtrasText : TextView = findViewById(R.id.cuentaAtrasText)
-                            reducirTiempo(cuentaAtrasText)
-                            reveal(x,y)
-                            return true
-                        }
-                        else if (mineboard[x][y].value >= 0) {
-                            mineboard[x][y].valorOriginal = mineboard[x][y].value
-                            mineboard[personajeX][personajeY].value = mineboard[personajeX][personajeY].valorOriginal
-
-                            personajeX = x
-                            personajeY = y
-
-                            mineboard[x][y].value = PERSONAJE
-                            reveal(x, y)
-                            return true
-                        }
-                        else{
-                            reveal(x, y)
-                            return true
-                        }
-                    }
-                    return false
-
-                }
-
+                modoRevelar(x,y)
             }
-
             flag -> {
-                with (mineboard[x][y]) {
-                    if(isRevealed) {
-                        return false
-                    }
-                    else if(isFlagged) {
-                        isFlagged=false
-                        setBackgroundResource(R.drawable.ladrillo)
-                        flaggedmines--
-                        minesLeftinfo.text= (romanos-flaggedmines).toString()
-                        return true
-                    }
-                    else {
-                        if(flaggedmines==romanos) {
-                            Toast.makeText(this@MinesweeperGame,"You cannot flag more mines",Toast.LENGTH_SHORT).show()
-                            return false
-                        }
-                        else {
-                            isFlagged=true
-                            flaggedmines++
-                            setBackgroundResource(R.drawable.flag)
-                            minesLeftinfo.text= (romanos-flaggedmines).toString()
-                            return true
-                        }
-                    }
-                }
+                modoMarcar(x,y)
             }
         }
-        return true
+        return
     }
+
+    private fun modoRevelar(x : Int, y : Int)  {
+
+        //TODO: que pasa si se toca una reliquia
+
+        //Si es el primer movimiento se coloca al personaje
+        if (!personajeColocado) {
+            mineboard[x][y].value = PERSONAJE
+            personajeX = x
+            personajeY = y
+            personajeColocado = true
+            reveal(x, y)
+            cuentaAtras?.start()
+            return
+        }
+
+        //El personaje se podra mover libremente por las casillas ya reveladas
+        if (mineboard[x][y].isRevealed) {
+
+            //Si selecciona la escalera ganara la partida
+            if (mineboard[x][y].value == ESCALERA) {
+                status = Status.WON
+                finalResult()
+
+            } else if (mineboard[x][y].value >= 0) {
+                mineboard[x][y].valorOriginal = mineboard[x][y].value
+                mineboard[personajeX][personajeY].value =
+                    mineboard[personajeX][personajeY].valorOriginal
+
+                personajeX = x
+                personajeY = y
+
+                mineboard[x][y].value = PERSONAJE
+                reveal(x, y)
+
+            } else if (mineboard[x][y].value == ROMANO) {
+                val cuentaAtrasText: TextView = findViewById(R.id.cuentaAtrasText)
+                reducirTiempo(cuentaAtrasText)
+            }
+
+        //Si la casilla aun no ha sido revelada, solo podra moverse de una en una
+        // (tambien en diagonal) y esta sera revelada
+        } else {
+            if ((Math.abs(personajeX - x) <= 1 && Math.abs(personajeY - y) <= 1)) {
+
+                //Si toca una mina "perdera"/"penalizara" la partida
+                if (mineboard[x][y].value == ROMANO) {
+                    val cuentaAtrasText: TextView = findViewById(R.id.cuentaAtrasText)
+                    reducirTiempo(cuentaAtrasText)
+
+                } else if (mineboard[x][y].value >= 0 && !mineboard[x][y].isFlagged) {
+                    mineboard[x][y].valorOriginal = mineboard[x][y].value //Destino
+
+                    mineboard[personajeX][personajeY].value =
+                        mineboard[personajeX][personajeY].valorOriginal    //Origen
+
+
+                    personajeX = x
+                    personajeY = y
+
+                    mineboard[x][y].value = PERSONAJE
+
+                }
+                reveal(x,y)
+            }
+        }
+        return
+    }
+
+    private fun modoMarcar(x : Int, y : Int ) {
+        val minesLeftinfo : TextView = findViewById(R.id.minesLeftinfo)
+
+        with (mineboard[x][y]) {
+            if(isRevealed) {
+                return //ESTO ES NECESARIO, NO QUITAR
+            }
+
+            if(!isFlagged && flaggedmines==romanos) {
+                Toast.makeText(this@MinesweeperGame,"You cannot flag more mines",Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            if(isFlagged) {
+                setBackgroundResource(R.drawable.ladrillo)
+                flaggedmines--
+            }
+            else {
+                setBackgroundResource(R.drawable.flag)
+                flaggedmines++
+            }
+            isFlagged = !isFlagged
+            minesLeftinfo.text= (romanos-flaggedmines).toString()
+
+            return
+        }
+    }
+
 
 
     private fun finalResult() {
@@ -453,27 +454,25 @@ class MinesweeperGame : AppCompatActivity() {
 
     // isComplete() function checks for the win conditions
     private fun isComplete():Boolean{
-        var minesMarked=true
-        var valuesRevealed=true
         mineboard.forEach{ row->
             row.forEach{
-                if(it.value==ROMANO) {
-                    if(!it.isFlagged)
-                        minesMarked=false
+
+                if(it.value == ROMANO) {
+                    if(!it.isFlagged && !it.isRevealed) {
+                        return false
+                    }
                 }
-                else if (it.value != ROMANO) {
-                    if(!it.isRevealed)
-                        valuesRevealed=false
+                else{
+                    if(!it.isRevealed) {
+                        return false
+                    }
                 }
+
             }
-
-        }
-        if(minesMarked && valuesRevealed) {
-            status=Status.WON
-            return true
         }
 
-        return  minesMarked && valuesRevealed
+        status=Status.WON
+        return true
     }
 
     //Ahora tambien revela a los romanos
@@ -510,7 +509,7 @@ class MinesweeperGame : AppCompatActivity() {
 
 
     //mines are set randomly
-    private fun setupmines(i: Int, j: Int) {
+    private fun setUpMines(i: Int, j: Int) {
         var m=1
         while(m<=romanos) {
             val x= Random(System.nanoTime()).nextInt(0,rows)
@@ -538,7 +537,7 @@ class MinesweeperGame : AppCompatActivity() {
         } while(mineboard[coordX][coordY].isMine() || mineboard[coordX][coordY].getCellValue() != 0)
 
 
-        mineboard[coordX][coordY].value= -2;
+        mineboard[coordX][coordY].value= ESCALERA;
     }
 
 
@@ -567,10 +566,7 @@ class MinesweeperGame : AppCompatActivity() {
         var minutos: Long = tiempo.subSequence(0,2).toString().toLong()
         var segundos: Long = tiempo.subSequence(3,5).toString().toLong()
 
-        minutos = minutos * 60 * 1000
-        segundos = segundos * 1000
-
-        var milisegundos : Long = minutos + segundos
+        var milisegundos : Long = ((minutos*60) + segundos)*1000
 
         milisegundos -= 5000 * (level+1)
 
@@ -595,6 +591,6 @@ class MinesweeperGame : AppCompatActivity() {
 
 enum class Status{
     WON,
-    ONGOINING,
+    ONGOING,
     LOST
 }
