@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
 class SelectLevel : AppCompatActivity(){
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_level)
@@ -13,7 +14,7 @@ class SelectLevel : AppCompatActivity(){
         val nivel = intent.getIntExtra("Mundo", 0)
 
         //Actualmente no habrá ninguna diferencia entre niveles,
-        // pues solo hace caso al metadato Mundo
+        //pues solo hace caso al metadato Mundo
 
         val facil : Button = findViewById(R.id.ejemploBoton1)
         facil.setOnClickListener{

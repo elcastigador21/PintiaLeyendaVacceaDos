@@ -38,7 +38,7 @@
         android:layout_width="57dp"
         android:layout_height="62dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="30dp"
         android:contentDescription="@string/view_instructions"
         android:foreground="@drawable/instru1"
@@ -49,12 +49,6 @@
         app:layout_constraintTop_toBottomOf="@id/guideline2"
         app:srcCompat="@drawable/instru1" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="174dp" />
 
     <LinearLayout
         android:id="@+id/board"
@@ -96,11 +90,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/instructions" />
 
+    <TextView
+        android:id="@+id/secretoTexto"
+        android:layout_width="88dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/secretos"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/leftmines" />
+
+    <TextView
+        android:id="@+id/secretosRestantes"
+        android:layout_width="39dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/_0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secretoTexto" />
+
     <ImageButton
         android:id="@+id/choice"
         android:layout_width="70dp"
         android:layout_height="67dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="30dp"
         android:contentDescription="@string/choice_to_flag_or_to_reveal"
         android:scaleType="fitStart"

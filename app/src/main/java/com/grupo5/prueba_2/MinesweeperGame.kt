@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import java.util.Locale
 import kotlin.random.Random
 
@@ -26,6 +27,7 @@ class MinesweeperGame : AppCompatActivity() {
     private var rows=0
     private var columns=0
     private var romanos=0
+    private var fragmentoReliquia=0
     private var mineboard= Array(rows){Array(columns){MineCell(this)}}
     private var playStarted=false
     private var played=0
@@ -46,6 +48,7 @@ class MinesweeperGame : AppCompatActivity() {
         const val ROMANO = -1
         const val ESCALERA = -2
         const val PERSONAJE = -3
+        const val FRAGMENTO_RELIQUIA = -4
         const val TIEMPO_FACIL : Long = 400_000     //
         const val TIEMPO_MEDIO : Long = 600_000     // Faltan de ajustar
         const val TIEMPO_DIFICIL : Long = 700_000   //
@@ -64,6 +67,7 @@ class MinesweeperGame : AppCompatActivity() {
             Toast.makeText(this,"Toca el tablero para comenzar. ¡Buena suerte!",Toast.LENGTH_LONG).show()
             playStarted
         }
+
         val intent=intent
         //level indicates the difficulty level of game
         level=intent.getIntExtra("Level",1)
@@ -73,19 +77,22 @@ class MinesweeperGame : AppCompatActivity() {
             0 -> {
                 rows=8
                 columns=8
-                romanos= 10
+                romanos=10
+                fragmentoReliquia=1
                 establecerCuentaAtras(TIEMPO_FACIL)
             }
             1 -> {
                 rows=12
                 columns=12
-                romanos= 25
+                romanos=25
+                fragmentoReliquia=2
                 establecerCuentaAtras(TIEMPO_MEDIO)
             }
             2 -> {
                 rows=16
                 columns=16
                 romanos=40
+                fragmentoReliquia=3
                 establecerCuentaAtras(TIEMPO_DIFICIL)
             }
         }
@@ -93,9 +100,13 @@ class MinesweeperGame : AppCompatActivity() {
 
         //mines left will show the number of mines not flagged
         val minesLeftinfo : TextView = findViewById(R.id.minesLeftinfo)
+        val secretosRestantes : TextView = findViewById(R.id.secretosRestantes)
         val instructions : Button = findViewById(R.id.instructions)
         val restart : Button = findViewById(R.id.restart)
-        minesLeftinfo.text= romanos.toString()
+
+        minesLeftinfo.text = romanos.toString()
+        secretosRestantes.text = fragmentoReliquia.toString()
+
         //Se crea un tablero con las dimensiones del nivel de dificultad escogido
         createBoard()
         //Cuando el usuario toca el icono de instrucciones se muestra un cuadro de dialogo con las instrucciones del juego
@@ -204,6 +215,7 @@ class MinesweeperGame : AppCompatActivity() {
                     // if the user has clicked the cell first time , the mines will be setup in the game ensuring the first clicked cell isnt a mine/bomb.
                     if (isFirstmove) {
                         setUpMines(i, j)
+                        ponerFragmentoReliquia()
                         //TODO: Poner las reliquias en el tablero
                     }
 
@@ -255,6 +267,7 @@ class MinesweeperGame : AppCompatActivity() {
 
         with(minecell) {
             when (value) {
+                -4 -> setBackgroundResource(R.drawable.jarron_roto)
                 -3 -> setBackgroundResource(R.drawable.protagonista)
                 -2 -> setBackgroundResource(R.drawable.escalera)
                 -1 -> setBackgroundResource(R.drawable.romano)
@@ -287,7 +300,7 @@ class MinesweeperGame : AppCompatActivity() {
     }
 
     private fun modoRevelar(x : Int, y : Int)  {
-
+        val secretosRestantes : TextView = findViewById(R.id.secretosRestantes)
         //TODO: que pasa si se toca una reliquia
 
         //Si es el primer movimiento se coloca al personaje
@@ -309,7 +322,8 @@ class MinesweeperGame : AppCompatActivity() {
                 status = Status.WON
                 finalResult()
 
-            } else if (mineboard[x][y].value >= 0) {
+            }
+            else if (mineboard[x][y].value >= 0) {
                 mineboard[x][y].valorOriginal = mineboard[x][y].value
                 mineboard[personajeX][personajeY].value =
                     mineboard[personajeX][personajeY].valorOriginal
@@ -320,18 +334,35 @@ class MinesweeperGame : AppCompatActivity() {
                 mineboard[x][y].value = PERSONAJE
                 reveal(x, y)
 
-            } else if (mineboard[x][y].value == ROMANO) {
+            }
+            else if (mineboard[x][y].value == ROMANO){
+                mineboard[x][y].valorOriginal = mineboard[x][y].value
+                mineboard[personajeX][personajeY].value =
+                    mineboard[personajeX][personajeY].valorOriginal
+
+                personajeX = x
+                personajeY = y
+
+                mineboard[x][y].value = PERSONAJE
+
                 val cuentaAtrasText: TextView = findViewById(R.id.cuentaAtrasText)
                 reducirTiempo(cuentaAtrasText)
+
+            }
+            else if(mineboard[x][y].getCellValue() == FRAGMENTO_RELIQUIA){
+                mineboard[x][y].value = 0
+                fragmentoReliquia --
+                secretosRestantes.text = fragmentoReliquia.toString()
             }
 
         //Si la casilla aun no ha sido revelada, solo podra moverse de una en una
         // (tambien en diagonal) y esta sera revelada
-        } else {
+        }
+        else {
             if ((Math.abs(personajeX - x) <= 1 && Math.abs(personajeY - y) <= 1)) {
 
-                //Si toca una mina "perdera"/"penalizara" la partida
-                if (mineboard[x][y].value == ROMANO) {
+                //Si toca un romano "penalizara" la partida si no esta marcada
+                if (mineboard[x][y].value == ROMANO && !mineboard[x][y].isFlagged) {
                     val cuentaAtrasText: TextView = findViewById(R.id.cuentaAtrasText)
                     reducirTiempo(cuentaAtrasText)
 
@@ -522,6 +553,24 @@ class MinesweeperGame : AppCompatActivity() {
             }
             updateNeighbours(x,y)
             m++
+        }
+    }
+
+    private fun ponerFragmentoReliquia(){
+        var coordX : Int
+        var coordY : Int
+
+        var indice = 0
+
+        while(indice < fragmentoReliquia) {
+            do {
+                coordX = Random(System.nanoTime()).nextInt(0, rows);
+                coordY = Random(System.nanoTime()).nextInt(0, columns);
+
+            } while (mineboard[coordX][coordY].isMine() || mineboard[coordX][coordY].getCellValue() != 0)
+
+            mineboard[coordX][coordY].value = FRAGMENTO_RELIQUIA;
+            indice ++
         }
     }
 
