@@ -24,12 +24,14 @@ class MainActivity : AppCompatActivity() {
         laboratorio.setOnClickListener{
             val intent = Intent(this@MainActivity, MakeCustomBoard::class.java)
             startActivity(intent)
+            finish()
         }
 
         val pantallaInicial : ConstraintLayout = findViewById(R.id.pantallaInicial)
         pantallaInicial.setOnClickListener{
             val intent = Intent(this, SelectWorld::class.java)
             startActivity(intent)
+            finish()
         }
 
         val tocaParaJugar : TextView = findViewById(R.id.toca_para_jugar)

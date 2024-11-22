@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".MinesweeperGame">
 
     <androidx.appcompat.widget.AppCompatButton
@@ -31,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="@+id/timerpic"
         app:layout_constraintStart_toStartOf="@+id/timerpic"
         app:layout_constraintTop_toBottomOf="@+id/timerpic"
-        android:text = "00:00"/>
+        android:text = "@string/_00_00"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/instructions"

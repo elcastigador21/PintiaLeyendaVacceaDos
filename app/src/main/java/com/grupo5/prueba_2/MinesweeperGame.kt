@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import java.util.Locale
 import kotlin.random.Random
 
@@ -35,7 +34,8 @@ class MinesweeperGame : AppCompatActivity() {
     private var lost=0
     private var lastGameTime=Integer.MAX_VALUE
     private var fastestTime=Integer.MAX_VALUE
-    private var level = -1
+    private var mundo = -1
+    private var nivel = -1
 
     private var personajeColocado = false
     private var personajeX = -1
@@ -69,30 +69,42 @@ class MinesweeperGame : AppCompatActivity() {
         }
 
         val intent=intent
-        //level indicates the difficulty level of game
-        level=intent.getIntExtra("Level",1)
+        //Mundo indica la dificultad
+        mundo=intent.getIntExtra("Mundo",0)
+        nivel=intent.getIntExtra("Nivel", 0)
 
-        when (level) {
+        when (mundo) {
             //TODO: Incluir el numero de trozos de reliquias
             0 -> {
+                if(nivel == 2){
+                    fragmentoReliquia = 2
+                }
+                else{
+                    fragmentoReliquia = mundo + 1
+                }
                 rows=8
                 columns=8
                 romanos=10
-                fragmentoReliquia=1
                 establecerCuentaAtras(TIEMPO_FACIL)
             }
             1 -> {
+                if(nivel == 2){
+                    fragmentoReliquia = 3
+                }
+                else{
+                    fragmentoReliquia = mundo + 1
+                }
                 rows=12
                 columns=12
                 romanos=25
-                fragmentoReliquia=2
                 establecerCuentaAtras(TIEMPO_MEDIO)
             }
             2 -> {
+                fragmentoReliquia=3
+
                 rows=16
                 columns=16
                 romanos=40
-                fragmentoReliquia=3
                 establecerCuentaAtras(TIEMPO_DIFICIL)
             }
         }
@@ -529,7 +541,7 @@ class MinesweeperGame : AppCompatActivity() {
             setPositiveButton("Si") { dialog, which ->
                 finalResult()
                 val intent = Intent(this@MinesweeperGame, SelectLevel::class.java).apply{
-                    putExtra("Mundo", level)
+                    putExtra("Mundo", mundo)
                 }
                 startActivity(intent)
                 finish()
@@ -617,7 +629,7 @@ class MinesweeperGame : AppCompatActivity() {
 
         var milisegundos : Long = ((minutos*60) + segundos)*1000
 
-        milisegundos -= 5000 * (level+1)
+        milisegundos -= 5000 * (mundo+1)
 
         establecerCuentaAtras(milisegundos)
 
