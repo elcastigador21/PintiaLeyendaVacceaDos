@@ -9,7 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
 
-class gameWon : AppCompatActivity() {
+class GameWon : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,15 +20,15 @@ class gameWon : AppCompatActivity() {
 
         val trophy: ImageView = findViewById(R.id.trophy)
         val congrats: TextView = findViewById(R.id.congrats)
-        val game_message: TextView = findViewById(R.id.game_message)
-        val continue_play: Button = findViewById(R.id.continue_play)
+        val gameMessage: TextView = findViewById(R.id.game_message)
+        val continuePlay: Button = findViewById(R.id.continue_play)
 
         if(result=="Lose")
 
         {
             trophy.setImageResource(R.drawable.lost)
             congrats.text=getString(R.string.lost_message)
-            game_message.text= getString(R.string.game_loss)
+            gameMessage.text= getString(R.string.game_loss)
 
 
         }
@@ -36,18 +36,19 @@ class gameWon : AppCompatActivity() {
         {
             trophy.setImageResource(R.drawable.trophy)
             congrats.text=getString(R.string.congratulations)
-            game_message.text= getString(R.string.win_message)
+            gameMessage.text= getString(R.string.win_message)
 
         }
-        continue_play?.setOnClickListener {
-            val intents= Intent(this@gameWon, MainActivity::class.java)
+        continuePlay.setOnClickListener {
+            val intents= Intent(this@GameWon, MainActivity::class.java)
             startActivity(intents)
+            finish()
         }
 
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed(){
-                val intent = Intent(this@gameWon, SelectWorld::class.java)
-                startActivity(intent)
+                val intents = Intent(this@GameWon, SelectWorld::class.java)
+                startActivity(intents)
                 finish()
             }
         }

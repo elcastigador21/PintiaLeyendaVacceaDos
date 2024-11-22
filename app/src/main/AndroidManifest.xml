@@ -30,7 +30,7 @@
             android:resizeableActivity="false">
         </activity>
         <activity
-            android:name=".gameWon"
+            android:name=".GameWon"
             android:exported="true"
             android:screenOrientation="landscape"
             android:resizeableActivity="false">

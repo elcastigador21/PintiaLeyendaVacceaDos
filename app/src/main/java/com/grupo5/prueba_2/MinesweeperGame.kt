@@ -1,7 +1,6 @@
 package com.grupo5.prueba_2
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -15,6 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Locale
+import kotlin.math.abs
 import kotlin.random.Random
 
 class MinesweeperGame : AppCompatActivity() {
@@ -42,7 +42,6 @@ class MinesweeperGame : AppCompatActivity() {
     private var personajeY = -1
     private var cuentaAtras : CountDownTimer? = null
 
-    //TODO: Poner variable que controle las reliquias
 
     companion object {
         const val ROMANO = -1
@@ -74,7 +73,7 @@ class MinesweeperGame : AppCompatActivity() {
         nivel=intent.getIntExtra("Nivel", 0)
 
         when (mundo) {
-            //TODO: Incluir el numero de trozos de reliquias
+
             0 -> {
                 if(nivel == 2){
                     fragmentoReliquia = 2
@@ -116,8 +115,8 @@ class MinesweeperGame : AppCompatActivity() {
         val instructions : Button = findViewById(R.id.instructions)
         val restart : Button = findViewById(R.id.restart)
 
-        minesLeftinfo.text = romanos.toString()
-        secretosRestantes.text = fragmentoReliquia.toString()
+        minesLeftinfo.text = String.format("%S", romanos)
+        secretosRestantes.text = String.format("%S", fragmentoReliquia)
 
         //Se crea un tablero con las dimensiones del nivel de dificultad escogido
         createBoard()
@@ -128,18 +127,16 @@ class MinesweeperGame : AppCompatActivity() {
 
                 //TODO:Cambiar mensaje
 
-                setTitle("Instrucciones del juego")
+                setTitle("Instrucciones del juego.")
                 setMessage(
-                    "Hi! Welcome to the Minesweeper Game." +
-                            "Here, you are provided with a board having certain no. of mines hidden in it."+
-                            "You can start your game by clicking on a random block." +
-                            "You can either open a block or flag it." +
-                            "Either a block has a number, or a mine hidden in it , otherwise it is empty." +
-                            "The number on a block depicts the no. of mines that surround it." +
-                            "The purpose is to open all such blocks with no mines hidden in them." +
-                            "You may flag all those blocks where mines are hidden." +
-                            "Enjoy the game!!" +
-                            "Good Luck!!"
+                    "¡Bienvenido a Pintia: la Leyenda Vaccea!\n" +
+                            "El juego comenzará cuando cliques la primera casilla.\n" +
+                            "las casillas pueden ser: desconocidas, marcadas, seguras, romanos, numericas, secretos, o la escalera.\n" +
+                            "Las casillas numeradas indican por cuantos romanos están rodeadas.\n" +
+                            "Puedes ganar la partida clickando la escalera, o explorando todo el mapa.\n" +
+                            "Marca las casillas que contengan romanos.\n" +
+                            "Aprovecha el nivel 1-1, para familiarizarte con el juego.\n" +
+                            "Recuerda que juegas contra el tiempo. Suerte!!!."
                 )
                 setCancelable(false)
                 setPositiveButton("Ok"
@@ -147,8 +144,8 @@ class MinesweeperGame : AppCompatActivity() {
 
             }
 
-            val instructions= builder.create()
-            instructions.show()
+            val dialogoInstrucciones= builder.create()
+            dialogoInstrucciones.show()
         }
         // on clicking restart icon,ser will be given an alert dialog confirming the action and if clicked yes, game will restart again
 
@@ -158,14 +155,15 @@ class MinesweeperGame : AppCompatActivity() {
 
                 setTitle("Reiniciar juego")
                 setMessage("La partida esta en curso. ¿Seguro que quieres reiniciar?")
-                setPositiveButton("Si", DialogInterface.OnClickListener { dialog, which ->
-                    val intents= getIntent()
-                    finish()
-                    startActivity(intents)
-                })
-                setNegativeButton("No"
+                setPositiveButton("Si")
+                    { dialog, which ->
+                        val intents= getIntent()
+                        finish()
+                        startActivity(intents)
+                    }
+                setNegativeButton("No")
+                { dialog, which ->  }
 
-                ) { dialog, which ->  }
             }
             val alert=builder.create()
             alert.show()
@@ -228,7 +226,6 @@ class MinesweeperGame : AppCompatActivity() {
                     if (isFirstmove) {
                         setUpMines(i, j)
                         ponerFragmentoReliquia()
-                        //TODO: Poner las reliquias en el tablero
                     }
 
                     move(toMove, i, j)
@@ -313,7 +310,6 @@ class MinesweeperGame : AppCompatActivity() {
 
     private fun modoRevelar(x : Int, y : Int)  {
         val secretosRestantes : TextView = findViewById(R.id.secretosRestantes)
-        //TODO: que pasa si se toca una reliquia
 
         //Si es el primer movimiento se coloca al personaje
         if (!personajeColocado) {
@@ -364,14 +360,14 @@ class MinesweeperGame : AppCompatActivity() {
             else if(mineboard[x][y].getCellValue() == FRAGMENTO_RELIQUIA){
                 mineboard[x][y].value = 0
                 fragmentoReliquia --
-                secretosRestantes.text = fragmentoReliquia.toString()
+                secretosRestantes.text = String.format("%S", fragmentoReliquia)
             }
 
         //Si la casilla aun no ha sido revelada, solo podra moverse de una en una
         // (tambien en diagonal) y esta sera revelada
         }
         else {
-            if ((Math.abs(personajeX - x) <= 1 && Math.abs(personajeY - y) <= 1)) {
+            if ((abs(personajeX - x) <= 1 && abs(personajeY - y) <= 1)) {
 
                 //Si toca un romano "penalizara" la partida si no esta marcada
                 if (mineboard[x][y].value == ROMANO && !mineboard[x][y].isFlagged) {
@@ -419,7 +415,7 @@ class MinesweeperGame : AppCompatActivity() {
                 flaggedmines++
             }
             isFlagged = !isFlagged
-            minesLeftinfo.text= (romanos-flaggedmines).toString()
+            minesLeftinfo.text= String.format("%S",(romanos-flaggedmines))
 
             return
         }
@@ -480,14 +476,14 @@ class MinesweeperGame : AppCompatActivity() {
         }
 
         if(status==Status.WON) {
-            val intent= Intent(this, gameWon::class.java).apply {
+            val intent= Intent(this, GameWon::class.java).apply {
                 putExtra("result","Won")
             }
             startActivity(intent)
         }
 
         else if(status==Status.LOST) {
-            val intent= Intent(this, gameWon::class.java).apply {
+            val intent= Intent(this, GameWon::class.java).apply {
                 putExtra("result","Lose")
             }
             startActivity(intent)
@@ -623,9 +619,9 @@ class MinesweeperGame : AppCompatActivity() {
     private fun reducirTiempo(cuentaAtrasText : TextView){
         cuentaAtras?.cancel()
 
-        var tiempo : String = cuentaAtrasText.text.toString()
-        var minutos: Long = tiempo.subSequence(0,2).toString().toLong()
-        var segundos: Long = tiempo.subSequence(3,5).toString().toLong()
+        val tiempo : String = cuentaAtrasText.text.toString()
+        val minutos: Long = tiempo.subSequence(0,2).toString().toLong()
+        val segundos: Long = tiempo.subSequence(3,5).toString().toLong()
 
         var milisegundos : Long = ((minutos*60) + segundos)*1000
 
