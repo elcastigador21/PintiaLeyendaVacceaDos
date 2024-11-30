@@ -125,7 +125,6 @@ class MinesweeperGame : AppCompatActivity() {
             val builder= AlertDialog.Builder(this)
             with(builder) {
 
-                //TODO:Cambiar mensaje
 
                 setTitle("Instrucciones del juego.")
                 setMessage(
@@ -402,7 +401,7 @@ class MinesweeperGame : AppCompatActivity() {
             }
 
             if(!isFlagged && flaggedmines==romanos) {
-                Toast.makeText(this@MinesweeperGame,"You cannot flag more mines",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MinesweeperGame,"No puedes marcar mas romanos",Toast.LENGTH_SHORT).show()
                 return
             }
 

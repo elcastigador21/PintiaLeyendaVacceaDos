@@ -30,6 +30,7 @@
         app:layout_constraintEnd_toEndOf="@+id/timerpic"
         app:layout_constraintStart_toStartOf="@+id/timerpic"
         app:layout_constraintTop_toBottomOf="@+id/timerpic"
+        android:fontFamily="@font/alagard"
         android:text = "@string/_00_00"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -83,6 +84,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
+        android:fontFamily="@font/alagard"
         android:text="@string/romans_left"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -96,6 +98,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
+        android:fontFamily="@font/alagard"
         android:text="@string/secretos"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -109,6 +112,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
         android:gravity="center"
+        android:fontFamily="@font/alagard"
         android:text="@string/_0"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -136,6 +140,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
         android:gravity="center"
+        android:fontFamily="@font/alagard"
         android:text="@string/_0"
         android:textSize="18sp"
         android:textStyle="bold"

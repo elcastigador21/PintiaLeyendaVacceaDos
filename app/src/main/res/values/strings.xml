@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Pintia:la leyenda Vaccea</string>
+    <string name="app_name">Pintia:La leyenda Vaccea</string>
     <string name="Sociales">Redes sociales</string>
     <string name="web">https://pintiavaccea.es</string>
     <string name="facebook">https://www.facebook.com/CEVFW/</string>
     <string name="twitter">https://www.twitter.com/ArchaeoPintia/</string>
     <string name="touch_to_play">Toca cualquier lugar para jugar</string>
-    <string name="minesweeper">Pintia: La leyenda Vaccea</string>
+    <string name="minesweeper">Pintia: La Leyenda Vaccea</string>
     <string name="easy">Easy</string>
     <string name="button">Button</string>
     <string name="medium">Medium</string>
@@ -51,6 +51,6 @@
     <string name="game_stats">Game Stats</string>
 
     <string name="return_call">return</string>
-    <string name="abort">Are you sure you want to abort the ongoing game?</string>
-    <string name="exit_game">Exit Game</string>
+    <string name="abort">¿Seguro que quieres dejar la partida?</string>
+    <string name="exit_game">Salir del juego</string>
 </resources>

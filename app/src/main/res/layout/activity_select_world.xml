@@ -18,6 +18,7 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/alagard"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/mundo2"
@@ -30,6 +31,7 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/alagard"
 
         app:layout_constraintStart_toEndOf="@+id/mundo1"
         app:layout_constraintEnd_toStartOf="@+id/mundo3"
@@ -42,6 +44,7 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/alagard"
 
         app:layout_constraintStart_toEndOf="@+id/mundo2"
 
