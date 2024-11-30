@@ -46,6 +46,15 @@
         </activity>
         <activity
 
+            android:name=".Laboratorio"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:resizeableActivity="false"
+
+            tools:ignore="DiscouragedApi"> <!--Esto es para que no salga lo tachado-->
+        </activity>
+        <activity
+
             android:name=".SelectWorld"
             android:exported="true"
             android:screenOrientation="landscape"

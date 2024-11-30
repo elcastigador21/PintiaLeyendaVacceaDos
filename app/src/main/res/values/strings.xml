@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pintia:La leyenda Vaccea</string>
     <string name="Sociales">Redes sociales</string>
+    <string name="reliquiario">Lista de Reliquias</string>
     <string name="web">https://pintiavaccea.es</string>
     <string name="facebook">https://www.facebook.com/CEVFW/</string>
     <string name="twitter">https://www.twitter.com/ArchaeoPintia/</string>

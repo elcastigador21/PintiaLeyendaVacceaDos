@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         val laboratorio : Button = findViewById(R.id.Laboratorio)
         laboratorio.setOnClickListener{
-            val intent = Intent(this@MainActivity, MakeCustomBoard::class.java)
+            val intent = Intent(this@MainActivity, Laboratorio::class.java)
             startActivity(intent)
             finish()
         }
