@@ -17,7 +17,7 @@
         android:id="@+id/trophy"
         android:layout_width="304dp"
         android:layout_height="224dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/result"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -27,30 +27,18 @@
 
         <TextView
             android:id="@+id/game_message"
-            android:layout_width="311dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/win_message"
             android:textColor="#9C27B0"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/congrats" />
+            app:layout_constraintTop_toBottomOf="@+id/trophy" />
 
-        <TextView
-        android:id="@+id/congrats"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:gravity="center"
-        android:text="@string/congratulations"
-        android:textColor="#970B0B"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="@+id/game_message"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/game_message"
-        app:layout_constraintTop_toBottomOf="@+id/trophy" />
+
 
     <Button
         android:id="@+id/continue_play"

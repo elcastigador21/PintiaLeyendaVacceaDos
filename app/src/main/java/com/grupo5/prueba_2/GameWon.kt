@@ -19,7 +19,6 @@ class GameWon : AppCompatActivity() {
         val result=intent.getStringExtra("result")
 
         val trophy: ImageView = findViewById(R.id.trophy)
-        val congrats: TextView = findViewById(R.id.congrats)
         val gameMessage: TextView = findViewById(R.id.game_message)
         val continuePlay: Button = findViewById(R.id.continue_play)
 
@@ -27,7 +26,6 @@ class GameWon : AppCompatActivity() {
 
         {
             trophy.setImageResource(R.drawable.lost)
-            congrats.text=getString(R.string.lost_message)
             gameMessage.text= getString(R.string.game_loss)
 
 
@@ -35,7 +33,6 @@ class GameWon : AppCompatActivity() {
         else if(result=="Win")
         {
             trophy.setImageResource(R.drawable.trophy)
-            congrats.text=getString(R.string.congratulations)
             gameMessage.text= getString(R.string.win_message)
 
         }

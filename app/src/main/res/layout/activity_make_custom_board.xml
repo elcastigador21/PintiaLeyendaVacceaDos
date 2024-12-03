@@ -37,7 +37,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="#00FFFFFF"
-            android:contentDescription="@string/view_instructions"
+            android:contentDescription="@string/instrucciones"
             android:scaleType="fitStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

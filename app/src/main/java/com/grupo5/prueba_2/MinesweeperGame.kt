@@ -13,6 +13,10 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
+import java.io.IOException
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.random.Random
@@ -42,13 +46,15 @@ class MinesweeperGame : AppCompatActivity() {
     private var personajeY = -1
     private var cuentaAtras : CountDownTimer? = null
 
+    private val outputFileName = "reliquias_modificadas.json"
+
 
     companion object {
         const val ROMANO = -1
         const val ESCALERA = -2
         const val PERSONAJE = -3
         const val FRAGMENTO_RELIQUIA = -4
-        const val TIEMPO_FACIL : Long = 400_000     //
+        const val TIEMPO_FACIL : Long = 240_000    //
         const val TIEMPO_MEDIO : Long = 600_000     // Faltan de ajustar
         const val TIEMPO_DIFICIL : Long = 700_000   //
         const val reveal="reveal"
@@ -126,7 +132,7 @@ class MinesweeperGame : AppCompatActivity() {
             with(builder) {
 
 
-                setTitle("Instrucciones del juego.")
+                setTitle(getString(R.string.instrucciones))
                 setMessage(
                     "¡Bienvenido a Pintia: la Leyenda Vaccea!\n" +
                             "El juego comenzará cuando cliques la primera casilla.\n" +
@@ -426,8 +432,6 @@ class MinesweeperGame : AppCompatActivity() {
         //timer stops as soon as game finishes
         cuentaAtras?.cancel()
 
-        //TODO: Tiene que escribir en el json
-
         val elapsedTime = 0
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         val currScore = elapsedTime.toInt()
@@ -441,11 +445,16 @@ class MinesweeperGame : AppCompatActivity() {
         sharedPref.edit(). putInt("Played",played+1).apply()
         played++
 
+        
         if(status==Status.WON) {
             lastGameTime=currScore
             won++
             if(currScore<fastestTime) {
                 fastestTime = currScore
+            }
+
+            if(fragmentoReliquia == 0){
+                descubirReliquia()
             }
         }
 
@@ -486,6 +495,75 @@ class MinesweeperGame : AppCompatActivity() {
                 putExtra("result","Lose")
             }
             startActivity(intent)
+        }
+    }
+
+    private fun descubirReliquia(){
+        try {
+
+            val jsonArray = leerJson()
+            // Obtener el objeto correspondiente
+            val objetoEncontrado : JSONObject? = buscarReliquiaPorId(jsonArray, mundo, nivel)
+
+
+            // Cambiar el estado
+            objetoEncontrado?.put("descubierta", true)
+
+            // Guardar los cambios en el archivo
+            guardarJsonEnFilesDir(jsonArray)
+
+        } catch (e: Exception) {
+            val dialogo = AlertDialog.Builder(this)
+            dialogo.apply {
+                setTitle("Error")
+                setMessage(e.toString())
+                setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            }.create().show()
+        }
+    }
+
+    // Función para buscar la reliquia por idMundo y idNivel
+    private fun buscarReliquiaPorId(jsonArray: JSONArray, idMundo: Int, idNivel: Int): JSONObject? {
+        for (i in 0 until jsonArray.length()) {
+            val objeto = jsonArray.getJSONObject(i)
+            if (objeto.getInt("mundoId") == idMundo && objeto.getInt("nivelId") == idNivel) {
+                return objeto // Devuelve el objeto encontrado
+            }
+        }
+        return null // Devuelve null si no se encuentra ninguna coincidencia
+    }
+
+    // Leer el archivo JSON desde filesDir y convertirlo en una lista
+    private fun leerJson(): JSONArray {
+        lateinit var jsonArray : JSONArray
+        try {
+            val file = File(filesDir, outputFileName)
+
+            // Leer el contenido del archivo
+            val jsonString = file.bufferedReader().use { it.readText() }
+
+            // Convertir el string JSON en un JSONArray
+            jsonArray = JSONArray(jsonString)
+
+        }
+        catch (e: Exception) {
+            val dialogo = AlertDialog.Builder(this)
+            dialogo.apply {
+                setTitle("Error al leer el archivo")
+                setMessage(e.toString())
+                setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            }.create().show()
+        }
+        return jsonArray
+    }
+
+    // Guardar el JSONArray en el archivo JSON
+    private fun guardarJsonEnFilesDir(jsonArray: JSONArray) {
+        try {
+            val file = File(filesDir, outputFileName)
+            file.writeText(jsonArray.toString())
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 

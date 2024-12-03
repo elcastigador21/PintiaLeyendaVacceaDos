@@ -20,10 +20,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="114dp"
         android:layout_marginBottom="20dp"
-        android:fontFamily="cursive"
+        android:fontFamily="@font/alagard"
+        android:background="#b1a8af80"
         android:text="@string/reliquiario"
         android:textColor="@color/black"
-        android:textSize="96sp"
+        android:textSize="90sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/reliquias"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +50,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reliquiario" />
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

@@ -17,7 +17,7 @@
     <string name="or">OR</string>
     <string name="make_custom_board">Laboratorio</string>
     <string name="set_up_your_own_board">SET UP YOUR OWN BOARD</string>
-    <string name="view_instructions">View Instructions</string>
+    <string name="instrucciones">"Instrucciones del juego"</string>
     <string name="enter_no_of_rows">Enter Rows</string>
     <string name="rows">Rows</string>
     <string name="enter_no_of_columns">Enter Columns</string>

@@ -15,40 +15,48 @@
         android:id="@+id/mundo1"
 
 
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:fontFamily="@font/alagard"
+        android:text="Mundo 1 - Facil"
 
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toStartOf="@+id/mundo2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        app:layout_constraintTop_toTopOf="parent"
-
-        android:text="Mundo 1 - Facil"/>
     <Button
         android:id="@+id/mundo2"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:fontFamily="@font/alagard"
+        android:text="Mundo 2 - Medio"
 
-        app:layout_constraintStart_toEndOf="@+id/mundo1"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toStartOf="@+id/mundo3"
-
+        app:layout_constraintStart_toEndOf="@+id/mundo1"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.501" />
 
-        android:text="Mundo 2 - Medio"/>
     <Button
         android:id="@+id/mundo3"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+
         android:fontFamily="@font/alagard"
 
+        android:text="Mundo 3 - Dificil"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mundo2"
-
         app:layout_constraintTop_toTopOf="parent"
-
-        android:text="Mundo 3 - Dificil"/>
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

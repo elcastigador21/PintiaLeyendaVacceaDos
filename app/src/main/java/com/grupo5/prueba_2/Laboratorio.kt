@@ -13,20 +13,31 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import org.json.JSONArray
+import java.io.File
 
 class Laboratorio : AppCompatActivity(){
+
+    private lateinit var jsonArray: JSONArray
+    private val outputFileName = "reliquias_modificadas.json"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_laboratorio)
 
         val reliquias : ListView = findViewById(R.id.reliquias)
-        val palabras = arrayOf("hola", "esto", "es", "una", "prueba")
+
+
+        // Leer el JSON desde filesDir y convertirlo en una lista
+        val lista = leerJson(outputFileName)
 
         // Crear el adaptador y asociarlo con el ListView
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, palabras)
+        val adapter = ArrayAdapter(this, R.layout.elemento_lista, lista)
         reliquias.adapter = adapter
 
         // Notificar al adaptador que los datos han cambiado
@@ -34,7 +45,7 @@ class Laboratorio : AppCompatActivity(){
 
         // Configurar acción al hacer clic en un elemento
         reliquias.setOnItemClickListener { _, _, position, _ ->
-            val elementoSeleccionado = palabras[position]
+            val elementoSeleccionado = lista[position]
             //mostrar vista de la reliquia
             Toast.makeText(this, "Seleccionaste: $elementoSeleccionado", Toast.LENGTH_SHORT).show()
         }
@@ -48,6 +59,47 @@ class Laboratorio : AppCompatActivity(){
 
         onBackPressedDispatcher.addCallback(this, callback)
 
+    }
+
+    // Leer el archivo JSON desde filesDir y convertirlo en una lista
+    private fun leerJson(outputFileName: String): List<String> {
+        val palabras = mutableListOf<String>()
+        try {
+            val file = File(filesDir, outputFileName)
+
+            // Leer el contenido del archivo
+            val jsonString = file.bufferedReader().use { it.readText() }
+
+            // Convertir el string JSON en un JSONArray
+            jsonArray = JSONArray(jsonString)
+
+            // Obtener la lista de nombres (o ??? si no está descubierta)
+            palabras.addAll(obtenerReliquias(jsonArray))
+        } catch (e: Exception) {
+            val dialogo = AlertDialog.Builder(this)
+            dialogo.apply {
+                setTitle("Error al leer el archivo")
+                setMessage(e.toString())
+                setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            }.create().show()
+        }
+        return palabras
+    }
+
+
+    // Convertir un JSONArray a una lista de nombres para el ListView
+    private fun obtenerReliquias(jsonArray: JSONArray): List<String> {
+        val palabras = mutableListOf<String>()
+        for (i in 0 until jsonArray.length()) {
+            val objeto = jsonArray.getJSONObject(i)
+            val nombre = if (objeto.getBoolean("descubierta")) {
+                objeto.getString("nombre")
+            } else {
+                "???"
+            }
+            palabras.add(nombre)
+        }
+        return palabras
     }
 
 }
