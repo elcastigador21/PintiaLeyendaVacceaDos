@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "mundoId" : 0,
+    "nivelId" : 0,
+    "nombre": "Denario de Baskunes",
+    "descripcion": "Un objeto antiguo lleno de misterio",
+    "descubierta": false
+  },
+  {
+    "id": 2,
+    "mundoId" : 0,
+    "nivelId" : 1,
+    "nombre": "Tapa de horno",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  },
+  {
+    "id": 3,
+    "mundoId" : 0,
+    "nivelId" : 2,
+    "nombre": "Zoomorfo vacceo",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  },
+  {
+    "id": 4,
+    "mundoId" : 1,
+    "nivelId" : 0,
+    "nombre": "Pomo de puñal",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  },
+  {
+    "id": 5,
+    "mundoId" : 1,
+    "nivelId" : 1,
+    "nombre": "Broche de perro",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  },
+  {
+    "id": 6,
+    "mundoId" : 1,
+    "nivelId" : 2,
+    "nombre": "Cajitas de barro",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  },
+  {
+    "id": 7,
+    "mundoId" : 2,
+    "nivelId" : 0,
+    "nombre": "Sonajas",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  },
+  {
+    "id": 8,
+    "mundoId" : 2,
+    "nivelId" : 1,
+    "nombre": "Tintinabulas",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  },
+  {
+    "id": 9,
+    "mundoId" : 2,
+    "nivelId" : 2,
+    "nombre": "Estela de clunia",
+    "descripcion": "Se dice que esta reliquia está maldita.",
+    "descubierta": false
+  }
+]
