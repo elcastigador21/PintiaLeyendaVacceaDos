@@ -3,11 +3,16 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:fillViewport="true"
+
     android:background="#FCFDFD"
-    tools:context=".GameWon">
+
+    tools:context=".GameWon"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,44 +20,65 @@
         >
     <ImageView
         android:id="@+id/trophy"
+
         android:layout_width="304dp"
         android:layout_height="224dp"
+
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/result"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
+
+        android:contentDescription="@string/result"
+
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/trophy" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:srcCompat="@drawable/trophy"
+        />
 
         <TextView
             android:id="@+id/game_message"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="10dp"
+
             android:gravity="center"
+
             android:text="@string/win_message"
             android:textColor="#9C27B0"
             android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/trophy"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/trophy" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
 
 
     <Button
         android:id="@+id/continue_play"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="40dp"
+        app:layout_constraintHorizontal_bias="0.0"
+
         android:background="#C0E3FF"
+
         android:text="@string/continue_playing"
         android:textColor="#000908"
+
         app:backgroundTint="#F48F88"
-        app:layout_constraintEnd_toEndOf="@+id/game_message"
-        app:layout_constraintHorizontal_bias="0.0"
+
+        app:layout_constraintTop_toBottomOf="@+id/game_message"
+
         app:layout_constraintStart_toStartOf="@+id/game_message"
-        app:layout_constraintTop_toBottomOf="@+id/game_message" />
+        app:layout_constraintEnd_toEndOf="@+id/game_message"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

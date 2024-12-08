@@ -50,6 +50,13 @@
     <string name="games_lost">Games Lost</string>
     <string name="games_won">Games Won</string>
     <string name="game_stats">Game Stats</string>
+    <string name="mundo1">Mundo 1</string>
+    <string name="mundo2">Mundo 2</string>
+    <string name="mundo3">Mundo 3</string>
+    <string name="dificultad1">Fácil</string>
+    <string name="dificultad2">Normal</string>
+    <string name="dificultad3">Dificil</string>
+
 
     <string name="return_call">return</string>
     <string name="abort">¿Seguro que quieres dejar la partida?</string>

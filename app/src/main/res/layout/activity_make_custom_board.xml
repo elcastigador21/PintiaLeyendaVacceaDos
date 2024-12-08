@@ -3,11 +3,16 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="#FCFDFD"
+
     android:fillViewport="true"
-    tools:context=".MakeCustomBoard">
+
+    tools:context=".MakeCustomBoard"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,130 +21,204 @@
 
         <TextView
             android:id="@+id/setuplabel"
+
             android:layout_width="297dp"
             android:layout_height="44dp"
+
             android:layout_marginTop="76dp"
+
             android:background="#BFE0FA"
+
             android:gravity="center"
+
             android:text="@string/set_up_your_own_board"
             android:textColor="#F10202"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <ImageButton
             android:id="@+id/custom_board_info"
+
             android:layout_width="35dp"
             android:layout_height="42dp"
+
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+
             android:background="#00FFFFFF"
+
             android:contentDescription="@string/instrucciones"
+
             android:scaleType="fitStart"
-            app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/instru2" />
+
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:srcCompat="@drawable/instru2"
+            />
 
         <TextView
             android:id="@+id/enter_rows"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="40dp"
+
             android:gravity="center"
+
             android:text="@string/enter_no_of_rows"
             android:textColor="#9C27B0"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+
+
+            app:layout_constraintTop_toBottomOf="@+id/setuplabel"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setuplabel" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <EditText
             android:id="@+id/rows"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="16dp"
+
             android:ems="10"
+
             android:hint="@string/rows"
+
             android:importantForAutofill="no"
+
             android:inputType="textPersonName"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/enter_rows"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enter_rows" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <TextView
             android:id="@+id/enter_cols"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="16dp"
+
             android:gravity="center"
+
             android:text="@string/enter_no_of_columns"
             android:textColor="#9C27B0"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/rows"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rows" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <EditText
             android:id="@+id/columns"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="16dp"
+
             android:autofillHints=""
+
             android:ems="10"
+
             android:hint="@string/columns"
+
             android:inputType="textPersonName"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+
+
+            app:layout_constraintTop_toBottomOf="@+id/enter_cols"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enter_cols" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <TextView
             android:id="@+id/enter_mines"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="16dp"
+
             android:gravity="center"
+
             android:text="@string/enter_no_of_mines"
             android:textColor="#9C27B0"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+
+
+            app:layout_constraintTop_toBottomOf="@+id/columns"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/columns" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <EditText
             android:id="@+id/mines"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="16dp"
+
             android:ems="10"
             android:hint="@string/mines"
 
             android:importantForAutofill="no"
+
             android:inputType="textPersonName"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/enter_mines"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enter_mines" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <Button
             android:id="@+id/start_custom"
+
             android:layout_width="170dp"
             android:layout_height="44dp"
+
             android:layout_marginTop="64dp"
+
             android:background="#E3F2FD"
+
             android:text="@string/start_game"
+
             android:textColor="#000C0B"
             android:textSize="18sp"
+
             app:backgroundTint="#A7CFEF"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/mines"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mines" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

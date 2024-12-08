@@ -57,12 +57,12 @@ class MinesweeperGame : AppCompatActivity() {
         const val TIEMPO_FACIL : Long = 240_000    //
         const val TIEMPO_MEDIO : Long = 600_000     // Faltan de ajustar
         const val TIEMPO_DIFICIL : Long = 700_000   //
-        const val reveal="reveal"
-        const val flag= "flag"
+        const val REVEAL="reveal"
+        const val FLAG= "flag"
         val movement= arrayOf(-1,0,1)
     }
 
-    private var toMove: String =reveal
+    private var toMove: String =REVEAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,10 +81,8 @@ class MinesweeperGame : AppCompatActivity() {
         when (mundo) {
 
             0 -> {
-                if(nivel == 2){
-                    fragmentoReliquia = 2
-                }
-                else{
+                fragmentoReliquia = 2
+                if(nivel != 2){
                     fragmentoReliquia = mundo + 1
                 }
                 rows=8
@@ -93,10 +91,8 @@ class MinesweeperGame : AppCompatActivity() {
                 establecerCuentaAtras(TIEMPO_FACIL)
             }
             1 -> {
-                if(nivel == 2){
-                    fragmentoReliquia = 3
-                }
-                else{
+                fragmentoReliquia = 3
+                if(nivel != 2){
                     fragmentoReliquia = mundo + 1
                 }
                 rows=12
@@ -196,13 +192,13 @@ class MinesweeperGame : AppCompatActivity() {
         //on clicking choice button user can switch its moves between reveal and flag
         choice.setOnClickListener {
 
-            if(toMove== reveal) {
-                toMove= flag
+            if(toMove== REVEAL) {
+                toMove= FLAG
                 choice.setImageResource(R.drawable.flag)
 
             }
             else {
-                toMove= reveal
+                toMove= REVEAL
                 choice.setImageResource(R.drawable.pala)
             }
         }
@@ -303,10 +299,10 @@ class MinesweeperGame : AppCompatActivity() {
     private fun move(choice:String, x: Int, y:Int){
 
         when(choice){
-            reveal -> {
+            REVEAL -> {
                 modoRevelar(x,y)
             }
-            flag -> {
+            FLAG -> {
                 modoMarcar(x,y)
             }
         }

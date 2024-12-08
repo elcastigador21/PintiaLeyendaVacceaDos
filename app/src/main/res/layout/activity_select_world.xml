@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:background="@drawable/fondoMundo"
+    >
 
     <!--
        <androidx.appcompat.widget.AppCompatButton
@@ -14,18 +17,18 @@
     <Button
         android:id="@+id/mundo1"
 
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:fontFamily="@font/alagard"
-        android:text="Mundo 1 - Facil"
+        android:text="@string/mundo1"
 
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintEnd_toStartOf="@+id/mundo2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/mundo2"
+        />
 
     <Button
         android:id="@+id/mundo2"
@@ -34,15 +37,15 @@
         android:layout_height="wrap_content"
 
         android:fontFamily="@font/alagard"
-        android:text="Mundo 2 - Medio"
+        android:text="@string/mundo2"
 
-
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintEnd_toStartOf="@+id/mundo3"
         app:layout_constraintStart_toEndOf="@+id/mundo1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.501" />
+        app:layout_constraintEnd_toStartOf="@+id/mundo3"
+
+        />
 
     <Button
         android:id="@+id/mundo3"
@@ -52,11 +55,12 @@
         android:layout_marginStart="20dp"
 
         android:fontFamily="@font/alagard"
+        android:text="@string/mundo3"
 
-        android:text="Mundo 3 - Dificil"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mundo2"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintStart_toEndOf="@+id/mundo2"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

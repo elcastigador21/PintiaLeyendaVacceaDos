@@ -13,8 +13,8 @@ class MakeCustomBoard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_make_custom_board)
-        val custom_board_info: ImageButton = findViewById(R.id.custom_board_info)
-        custom_board_info.setOnClickListener{
+        val customBoardInfo: ImageButton = findViewById(R.id.custom_board_info)
+        customBoardInfo.setOnClickListener{
             val builder= AlertDialog.Builder(this)
             with(builder)
             {
@@ -34,11 +34,11 @@ Enjoy the Game!! Good Luck!"""
             dialog.show()
         }
 
-        val start_custom: Button = findViewById(R.id.start_custom)
+        val startCustom: Button = findViewById(R.id.start_custom)
         val rowsText: EditText = findViewById(R.id.rows)
         val columnsText: EditText = findViewById(R.id.columns)
         val minesText: EditText = findViewById(R.id.mines)
-        start_custom.setOnClickListener {
+        startCustom.setOnClickListener {
             // if the dimensions are not provided, toast will appear
             if(rowsText.text.isBlank()||columnsText.text.isBlank()||minesText.text.isBlank())
             {

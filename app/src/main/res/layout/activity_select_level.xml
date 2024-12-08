@@ -14,42 +14,52 @@
     <Button
         android:id="@+id/ejemploBoton1"
 
-
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:fontFamily="@font/alagard"
+        android:text="@string/dificultad1"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ejemploBoton2"
 
-        app:layout_constraintTop_toTopOf="parent"
 
-        android:text="GG EZ"/>
+        />
     <Button
         android:id="@+id/ejemploBoton2"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:fontFamily="@font/alagard"
+        android:text="@string/dificultad2"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintStart_toEndOf="@+id/ejemploBoton1"
         app:layout_constraintEnd_toStartOf="@+id/ejemploBoton3"
 
-        app:layout_constraintTop_toTopOf="parent"
+        />
 
-        android:text="Meh"/>
     <Button
         android:id="@+id/ejemploBoton3"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alagard"
 
-        app:layout_constraintStart_toEndOf="@+id/ejemploBoton2"
+        android:fontFamily="@font/alagard"
+        android:text="@string/dificultad3"
 
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
 
-        android:text="DIFICIL"/>
+        app:layout_constraintStart_toEndOf="@+id/ejemploBoton2"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

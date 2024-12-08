@@ -3,11 +3,15 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:fillViewport="true"
     android:background="#FCFDFD"
-    tools:context=".GameStats">
+
+    tools:context=".GameStats"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,183 +19,257 @@
         >
     <TextView
         android:id="@+id/stats_label"
+
         android:layout_width="185dp"
         android:layout_height="51dp"
+
         android:layout_marginTop="72dp"
+
         android:background="#D3F3AE"
+
         android:gravity="center"
+
         android:text="@string/game_stats"
         android:textColor="#026A61"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <TextView
         android:id="@+id/play_label"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="72dp"
+
         android:gravity="center"
+
         android:text="@string/games_played"
         android:textColor="#673AB7"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/stats_label"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stats_label" />
+        />
 
     <TextView
         android:id="@+id/played"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
         android:layout_marginTop="72dp"
+
         android:gravity="center"
+
         android:text="@string/_0"
         android:textColor="#E91E63"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/stats_label"
+
         app:layout_constraintStart_toEndOf="@+id/play_label"
-        app:layout_constraintTop_toBottomOf="@+id/stats_label" />
+        />
 
     <TextView
         android:id="@+id/win_label"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/games_won"
         android:textColor="#673AB7"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/play_label"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_label" />
+        />
 
     <TextView
         android:id="@+id/won"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="124dp"
-        android:layout_marginLeft="124dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/_0"
         android:textColor="#E91E63"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/played"
+
         app:layout_constraintStart_toEndOf="@+id/win_label"
-        app:layout_constraintTop_toBottomOf="@+id/played" />
+        />
 
     <TextView
         android:id="@+id/lost_label"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/games_lost"
         android:textColor="#673AB7"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/win_label"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/win_label" />
+        />
 
     <TextView
         android:id="@+id/lost"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="128dp"
-        android:layout_marginLeft="128dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/_0"
         android:textColor="#E91E63"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/won"
+
         app:layout_constraintStart_toEndOf="@+id/lost_label"
-        app:layout_constraintTop_toBottomOf="@+id/won" />
+        />
 
     <TextView
         android:id="@+id/besttime_label"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/best_game_time"
         android:textColor="#673AB7"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/lost_label"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lost_label" />
+        />
 
     <TextView
         android:id="@+id/bestTime"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/na"
         android:textColor="#E91E63"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/lost"
+
         app:layout_constraintStart_toEndOf="@+id/besttime_label"
-        app:layout_constraintTop_toBottomOf="@+id/lost" />
+        />
 
     <TextView
         android:id="@+id/lasttime_label"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/last_game_time"
         android:textColor="#673AB7"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/besttime_label"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/besttime_label" />
+        />
 
     <TextView
         android:id="@+id/lastTime"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
         android:layout_marginTop="30dp"
+
         android:gravity="center"
+
         android:text="@string/na"
         android:textColor="#E91E63"
         android:textSize="25sp"
         android:textStyle="bold"
+
+        app:layout_constraintTop_toBottomOf="@+id/bestTime"
+
         app:layout_constraintStart_toEndOf="@+id/lasttime_label"
-        app:layout_constraintTop_toBottomOf="@+id/bestTime" />
+        />
 
     <Button
         android:id="@+id/return_call"
+
         android:layout_width="156dp"
         android:layout_height="47dp"
+
         android:layout_marginStart="116dp"
-        android:layout_marginLeft="116dp"
         android:layout_marginTop="68dp"
+
         android:text="@string/return_call"
         android:textColor="#770680"
         android:textSize="20sp"
         android:textStyle="bold"
+
         app:backgroundTint="#82C6FB"
+
+        app:layout_constraintTop_toBottomOf="@+id/lasttime_label"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lasttime_label" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

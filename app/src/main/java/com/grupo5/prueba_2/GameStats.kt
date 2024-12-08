@@ -18,12 +18,12 @@ class GameStats : AppCompatActivity() {
         val lost: TextView = findViewById(R.id.lost)
         val bestTime: TextView = findViewById(R.id.bestTime)
         val lastTime: TextView = findViewById(R.id.lastTime)
-        val return_call: Button = findViewById(R.id.return_call)
+        val returnCall: Button = findViewById(R.id.return_call)
         with(intent)
         {
-            played.text= this.getIntExtra("played",0).toString()
-            won.text= this.getIntExtra("won",0).toString()
-            lost.text=this.getIntExtra("lost",0).toString()
+            played.text= String.format("played",0)
+            won.text = String.format("won, 0")
+            lost.text = String.format("lost", 0)
             val best=this.getIntExtra("bestTime",Int.MAX_VALUE)
             bestTime.text = if(best==Int.MAX_VALUE)"NA";else ""+((best / 1000) / 60)+" m "+((best/ 1000) % 60)+" s"
             val last=this.getIntExtra("lastTime",0)
@@ -33,7 +33,7 @@ class GameStats : AppCompatActivity() {
 
 
 // returns back to main screen once user clicks
-        return_call.setOnClickListener {
+        returnCall.setOnClickListener {
             val intents= Intent(this, MainActivity::class.java)
             startActivity(intents)
         }
