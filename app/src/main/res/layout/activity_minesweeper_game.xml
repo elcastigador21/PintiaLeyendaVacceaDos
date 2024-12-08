@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".MinesweeperGame"
+    android:background="@drawable/fondonivele"
 
-    android:background="@drawable/fondonivel"
-    >
-
+    tools:context=".MinesweeperGame">
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -17,21 +15,24 @@
 
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="90dp"
         android:layout_marginBottom="28dp"
 
-        android:contentDescription="@string/restart"
+        android:background="@null"
 
-        android:foreground="@drawable/restart"
+        android:contentDescription="@string/restart"
+        android:foreground="@drawable/reiniciar"
 
         android:scaleType="fitStart"
 
-        app:layout_constraintTop_toBottomOf="@id/guideline4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:srcCompat="@drawable/restart"
+        app:layout_constraintTop_toBottomOf="@id/guideline4"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+
+        app:srcCompat="@drawable/reiniciar"
         />
 
     <TextView
@@ -42,16 +43,17 @@
 
         android:layout_marginTop="8dp"
 
-        android:textSize="18sp"
         android:fontFamily="@font/alagard"
+        android:text="@string/_00_00"
+        android:textColor="#000000"
+
+        android:textSize="18sp"
+
+        app:layout_constraintEnd_toEndOf="@+id/timerpic"
+        app:layout_constraintStart_toStartOf="@+id/timerpic"
+
 
         app:layout_constraintTop_toBottomOf="@+id/timerpic"
-
-        app:layout_constraintStart_toStartOf="@+id/timerpic"
-        app:layout_constraintEnd_toEndOf="@+id/timerpic"
-
-
-        android:text = "@string/_00_00"
         />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -60,14 +62,14 @@
         android:layout_width="57dp"
         android:layout_height="62dp"
 
-        android:layout_marginStart="12dp"
         android:layout_marginTop="22dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintHorizontal_bias="0.695"
+
+        app:layout_constraintHorizontal_bias="0.20"
+
+        android:background="@null"
 
         android:contentDescription="@string/instrucciones"
-
-        android:foreground="@drawable/instru1"
+        android:foreground="@drawable/informacion"
 
         android:scaleType="fitStart"
 
@@ -76,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/choice"
 
-        app:srcCompat="@drawable/instru1"
+        app:srcCompat="@drawable/informacion"
         />
 
 
@@ -88,16 +90,16 @@
 
         android:layout_marginTop="12dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintHorizontal_bias="0.583"
-        app:layout_constraintVertical_bias="0.0"
-
         android:orientation="vertical"
-
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         >
 
     </LinearLayout>
@@ -105,19 +107,21 @@
     <ImageView
         android:id="@+id/timerpic"
 
-        android:layout_width="49dp"
+        android:layout_width="70dp"
         android:layout_height="35dp"
 
-        android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
+
+        android:background="@null"
 
         android:contentDescription="@string/timer"
 
         app:layout_constraintTop_toBottomOf="@id/choice"
 
-        app:layout_constraintStart_toEndOf="@+id/leftmines"
+        app:layout_constraintStart_toStartOf="@id/choice"
+        app:layout_constraintEnd_toEndOf="@id/choice"
 
-        app:srcCompat="@drawable/timer"
+        app:srcCompat="@drawable/temporizador"
         />
 
     <TextView
@@ -127,17 +131,17 @@
         android:layout_height="26dp"
 
         android:layout_marginTop="50dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="30dp"
 
         android:fontFamily="@font/alagard"
         android:text="@string/romans_left"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
 
         app:layout_constraintTop_toBottomOf="@id/instructions"
 
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/timerpic"
         />
 
     <TextView
@@ -147,17 +151,18 @@
         android:layout_height="26dp"
 
         android:layout_marginTop="50dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="30dp"
 
         android:fontFamily="@font/alagard"
         android:text="@string/secretos"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
+
 
         app:layout_constraintTop_toBottomOf="@id/leftmines"
 
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/timerpic"
         />
 
     <TextView
@@ -166,19 +171,20 @@
         android:layout_width="39dp"
         android:layout_height="31dp"
 
-        android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
 
-        android:gravity="center"
-
         android:fontFamily="@font/alagard"
+
+        android:gravity="center"
         android:text="@string/_0"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
 
         app:layout_constraintTop_toBottomOf="@+id/secretoTexto"
 
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/secretoTexto"
+        app:layout_constraintEnd_toEndOf="@id/secretoTexto"
         />
 
     <ImageButton
@@ -188,15 +194,18 @@
         android:layout_height="67dp"
 
         android:layout_marginTop="22dp"
-        android:layout_marginEnd="30dp"
+
+        app:layout_constraintHorizontal_bias="0.80"
 
         android:contentDescription="@string/choice_to_flag_or_to_reveal"
         android:scaleType="fitStart"
+
 
         app:layout_constraintTop_toBottomOf="@id/guideline2"
 
         app:layout_constraintStart_toEndOf="@id/instructions"
         app:layout_constraintEnd_toStartOf="@id/guideline"
+
 
         app:srcCompat="@drawable/pala"
 
@@ -209,19 +218,20 @@
         android:layout_width="39dp"
         android:layout_height="31dp"
 
-        android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
 
-        android:gravity="center"
-
         android:fontFamily="@font/alagard"
+
+        android:gravity="center"
         android:text="@string/_0"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
 
         app:layout_constraintTop_toBottomOf="@+id/leftmines"
 
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/leftmines"
+        app:layout_constraintEnd_toEndOf="@id/leftmines"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -232,8 +242,7 @@
 
         android:orientation="horizontal"
 
-        app:layout_constraintGuide_end="80dp"
-        />
+        app:layout_constraintGuide_percent="0.8053528" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -243,8 +252,7 @@
 
         android:orientation="vertical"
 
-        app:layout_constraintGuide_begin="229dp"
-        />
+        app:layout_constraintGuide_percent="0.31463748" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -254,8 +262,7 @@
 
         android:orientation="horizontal"
 
-        app:layout_constraintGuide_begin="16dp"
-        />
+        app:layout_constraintGuide_percent="0.04136253" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -265,7 +272,6 @@
 
         android:orientation="horizontal"
 
-        app:layout_constraintGuide_begin="395dp"
-        />
+        app:layout_constraintGuide_percent="0.96107054" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
