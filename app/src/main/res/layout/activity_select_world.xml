@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@drawable/fondomundo">
+
+
+    android:background="@drawable/seleccionmundo"
+    >
 
     <!--
        <androidx.appcompat.widget.AppCompatButton
@@ -21,6 +24,10 @@
         android:fontFamily="@font/alagard"
         android:text="@string/mundo1"
 
+
+
+
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/mundo2"
 
@@ -36,6 +43,8 @@
         android:fontFamily="@font/alagard"
         android:text="@string/mundo2"
 
+
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/mundo3"
 

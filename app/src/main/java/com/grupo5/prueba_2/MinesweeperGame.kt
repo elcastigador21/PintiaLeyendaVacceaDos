@@ -223,7 +223,7 @@ class MinesweeperGame : AppCompatActivity() {
 
                 linearLayout.addView(button)
                 button.setOnClickListener {
-                    // if the user has clicked the cell first time , the mines will be setup in the game ensuring the first clicked cell isnt a mine/bomb.
+                    //Las bombas se ponen cuando el usuario ha realizado el primer movimiento
                     if (isFirstmove) {
                         setUpMines(i, j)
                         ponerFragmentoReliquia()
@@ -274,7 +274,6 @@ class MinesweeperGame : AppCompatActivity() {
     }
 
     private fun setImage(minecell: MineCell) {
-
         with(minecell) {
             when (value) {
                 -4 -> setBackgroundResource(R.drawable.jarron_roto)
@@ -297,7 +296,6 @@ class MinesweeperGame : AppCompatActivity() {
 
     //Revela o marca una celda dependiendo de la opcion elegida por el usuario
     private fun move(choice:String, x: Int, y:Int){
-
         when(choice){
             REVEAL -> {
                 modoRevelar(x,y)
@@ -484,6 +482,7 @@ class MinesweeperGame : AppCompatActivity() {
                 putExtra("result","Won")
             }
             startActivity(intent)
+            finish()
         }
 
         else if(status==Status.LOST) {
@@ -491,12 +490,12 @@ class MinesweeperGame : AppCompatActivity() {
                 putExtra("result","Lose")
             }
             startActivity(intent)
+            finish()
         }
     }
 
     private fun descubirReliquia(){
         try {
-
             val jsonArray = leerJson()
             // Obtener el objeto correspondiente
             val objetoEncontrado : JSONObject? = buscarReliquiaPorId(jsonArray, mundo, nivel)
@@ -523,10 +522,11 @@ class MinesweeperGame : AppCompatActivity() {
         for (i in 0 until jsonArray.length()) {
             val objeto = jsonArray.getJSONObject(i)
             if (objeto.getInt("mundoId") == idMundo && objeto.getInt("nivelId") == idNivel) {
-                return objeto // Devuelve el objeto encontrado
+                return objeto
             }
         }
-        return null // Devuelve null si no se encuentra ninguna coincidencia
+        // Devuelve null si no se encuentra ninguna coincidencia
+        return null
     }
 
     // Leer el archivo JSON desde filesDir y convertirlo en una lista
@@ -568,7 +568,6 @@ class MinesweeperGame : AppCompatActivity() {
     private fun isComplete():Boolean{
         mineboard.forEach{ row->
             row.forEach{
-
                 if(it.value == ROMANO) {
                     if(!it.isFlagged && !it.isRevealed) {
                         return false
@@ -579,10 +578,8 @@ class MinesweeperGame : AppCompatActivity() {
                         return false
                     }
                 }
-
             }
         }
-
         status=Status.WON
         return true
     }
@@ -659,14 +656,10 @@ class MinesweeperGame : AppCompatActivity() {
     private fun ponerEscalera(){
         var coordX : Int
         var coordY : Int
-
         do{
             coordX = Random(System.nanoTime()).nextInt(0,rows);
             coordY = Random(System.nanoTime()).nextInt(0,columns);
-
         } while(mineboard[coordX][coordY].isMine() || mineboard[coordX][coordY].getCellValue() != 0)
-
-
         mineboard[coordX][coordY].value= ESCALERA;
     }
 

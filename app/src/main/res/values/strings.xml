@@ -41,7 +41,7 @@
     <string name="lost_message">Perdiste ☹</string>
     <string name="game_loss">Los romanos han conquistado Pintia</string>
     <string name="stats_label">View your stats</string>
-    <string name="continue_playing">Continue Playing</string>
+    <string name="continue_playing">Volver al menú</string>
     <string name="exit">Exit</string>
     <string name="na">NA</string>
     <string name="best_game_time">Best Game Time</string>
@@ -50,12 +50,17 @@
     <string name="games_lost">Games Lost</string>
     <string name="games_won">Games Won</string>
     <string name="game_stats">Game Stats</string>
+
     <string name="mundo1">Mundo 1</string>
     <string name="mundo2">Mundo 2</string>
     <string name="mundo3">Mundo 3</string>
     <string name="dificultad1">Fácil</string>
     <string name="dificultad2">Normal</string>
     <string name="dificultad3">Dificil</string>
+
+    <string name="diego">Diego Capellán Rodríguez</string>
+    <string name="dani">Daniel Martínez Álvarez</string>
+    <string name="elisa">Elisa Bravo Torres</string>
 
 
     <string name="return_call">return</string>
