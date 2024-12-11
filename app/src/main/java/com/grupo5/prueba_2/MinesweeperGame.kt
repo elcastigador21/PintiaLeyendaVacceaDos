@@ -482,6 +482,7 @@ class MinesweeperGame : AppCompatActivity() {
                 putExtra("result","Won")
             }
             startActivity(intent)
+            finish()
         }
 
         else if(status==Status.LOST) {
@@ -489,12 +490,12 @@ class MinesweeperGame : AppCompatActivity() {
                 putExtra("result","Lose")
             }
             startActivity(intent)
+            finish()
         }
     }
 
     private fun descubirReliquia(){
         try {
-
             val jsonArray = leerJson()
             // Obtener el objeto correspondiente
             val objetoEncontrado : JSONObject? = buscarReliquiaPorId(jsonArray, mundo, nivel)
@@ -521,10 +522,11 @@ class MinesweeperGame : AppCompatActivity() {
         for (i in 0 until jsonArray.length()) {
             val objeto = jsonArray.getJSONObject(i)
             if (objeto.getInt("mundoId") == idMundo && objeto.getInt("nivelId") == idNivel) {
-                return objeto // Devuelve el objeto encontrado
+                return objeto
             }
         }
-        return null // Devuelve null si no se encuentra ninguna coincidencia
+        // Devuelve null si no se encuentra ninguna coincidencia
+        return null
     }
 
     // Leer el archivo JSON desde filesDir y convertirlo en una lista

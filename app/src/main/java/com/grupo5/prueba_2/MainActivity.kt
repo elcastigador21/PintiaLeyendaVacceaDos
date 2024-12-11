@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var jsonArray: JSONArray
     private val outputFileName = "reliquias_modificadas.json"
+    private val inputFileName = "json/reliquias.json"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +77,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        copiarJson(this, "json/reliquias.json", outputFileName)
+        val outputFile = File(this@MainActivity.filesDir, outputFileName)
 
+        if(!outputFile.exists()) {
+            copiarJson(this)
+        }
 
         val dialogoMenuBoton : ImageButton = findViewById(R.id.configuracion)
         val dialogo = Dialog(this@MainActivity)
@@ -101,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                     setMessage("¿Seguro que quieres borrar tu progreso en el juego? \n (Esta acción no se puede deshacer)")
                     setPositiveButton("Si")
                     { dialog, which ->
-                        resetearJson(this@MainActivity,"json/reliquias.json", outputFileName)
+                        copiarJson(this@MainActivity)
                         dialogo.dismiss()
                         Toast.makeText(this@MainActivity, "Has reseteado el progreso", Toast.LENGTH_SHORT).show()
                     }
@@ -113,36 +118,22 @@ class MainActivity : AppCompatActivity() {
             }
             dialogo.show()
         }
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed(){
+                finish()
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this, callback)
     }
 
 
     // Copiar archivo JSON desde assets a filesDir
-    private fun copiarJson(context: MainActivity, assetFileName: String, outputFileName: String) {
+    private fun copiarJson(context: MainActivity) {
         val outputFile = File(context.filesDir, outputFileName)
-
-        if (!outputFile.exists()) {
-            try {
-                context.assets.open(assetFileName).use { inputStream ->
-                    outputFile.outputStream().use { outputStream ->
-                        inputStream.copyTo(outputStream)
-                    }
-                }
-            } catch (e: Exception) {
-                val dialogo = AlertDialog.Builder(context)
-                dialogo.apply {
-                    setTitle("Error al copiar el archivo")
-                    setMessage(e.toString())
-                    setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                }.create().show()
-            }
-        }
-    }
-
-    private fun resetearJson(context: MainActivity, assetFileName: String, outputFileName: String){
-        val outputFile = File(context.filesDir, outputFileName)
-
         try {
-            context.assets.open(assetFileName).use { inputStream ->
+            context.assets.open(inputFileName).use { inputStream ->
                 outputFile.outputStream().use { outputStream ->
                     inputStream.copyTo(outputStream)
                 }
@@ -155,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                 setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
             }.create().show()
         }
-    }
 
+    }
 
 }
