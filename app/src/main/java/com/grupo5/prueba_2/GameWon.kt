@@ -51,8 +51,5 @@ class GameWon : AppCompatActivity() {
         }
 
         onBackPressedDispatcher.addCallback(this, callback)
-
     }
-
-
 }

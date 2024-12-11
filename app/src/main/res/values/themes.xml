@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.Prueba_2" parent="Base.Theme.Prueba_2" />
+
+    <style name="animacion_dialogo">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>
