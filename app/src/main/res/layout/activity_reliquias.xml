@@ -26,12 +26,85 @@
         app:layout_constraintGuide_begin="20dp"
         />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/btn_dialog"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="94dp" />
+    <TextView
+        android:id="@+id/nombre"
+        android:layout_width="360dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="420dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="11dp"
+        android:background="#59FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/Descripcion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Imagen"
+        android:layout_width="363dp"
+        android:layout_height="299dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="80dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Descripcion"
+        android:layout_width="360dp"
+        android:layout_height="242dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="19dp"
+        android:background="#59FFFFFF"
+
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+        android:smoothScrollbar="true"
+
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/Imagen"
+        app:layout_constraintTop_toBottomOf="@+id/nombre" />
+
+    <Button
+        android:id="@+id/Siguiente"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="328dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/flechadcha"
+        android:text="Siguiente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Descripcion"
+        app:layout_constraintStart_toEndOf="@+id/Anterior"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Anterior"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="328dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/flechaizda"
+        android:text="Anterior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Siguiente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

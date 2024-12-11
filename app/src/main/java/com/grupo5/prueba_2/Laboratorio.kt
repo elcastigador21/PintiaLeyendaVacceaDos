@@ -58,9 +58,15 @@ class Laboratorio : AppCompatActivity(){
 
         // Configurar acción al hacer clic en un elemento
         reliquias.setOnItemClickListener { _, _, position, _ ->
-            val elementoSeleccionado = lista[position]
-            //mostrar vista de la reliquia
-            Toast.makeText(this, "Seleccionaste: $elementoSeleccionado", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@Laboratorio, Reliquias::class.java)
+            // Pasar las listas y la posición
+            intent.putStringArrayListExtra("nombres", ArrayList(nombres))
+            intent.putStringArrayListExtra("descripciones", ArrayList(descripciones))
+            intent.putExtra("posicion", position)
+
+            // Iniciar la nueva actividad
+            startActivity(intent)
+            finish()
         }
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed(){
