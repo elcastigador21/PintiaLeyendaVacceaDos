@@ -3,6 +3,7 @@ package com.grupo5.prueba_2
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
@@ -43,6 +44,8 @@ class MinesweeperGame : AppCompatActivity() {
 
     private val outputFileName = "reliquias_modificadas.json"
 
+    private val mediaPlayer: MediaPlayer = MediaPlayer()
+
 
     companion object {
         const val ROMANO = -1
@@ -72,6 +75,14 @@ class MinesweeperGame : AppCompatActivity() {
         //Mundo indica la dificultad
         mundo=intent.getIntExtra("Mundo",0)
         nivel=intent.getIntExtra("Nivel", 0)
+
+        //Codigo para iniciar la musica del nivel
+        val afd = assets.openFd("Cancion3.mp4")
+        mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+        mediaPlayer.prepare()
+        mediaPlayer.start()
+
+
 
         when (mundo) {
 
@@ -190,6 +201,13 @@ class MinesweeperGame : AppCompatActivity() {
                 toMove= REVEAL
                 choice.setImageResource(R.drawable.pala)
             }
+        }
+
+
+        // Codigo para repetir la musica del nivel
+        mediaPlayer.setOnCompletionListener {
+            mediaPlayer.seekTo(0) // Reset to the beginning
+            mediaPlayer.start()    // Start playing again
         }
 
         for(i in 0 until rows) {
@@ -414,6 +432,10 @@ class MinesweeperGame : AppCompatActivity() {
     private fun finalResult() {
         //Para la cuenta atras
         cuentaAtras?.cancel()
+
+        //Codigo para parar la musica
+        mediaPlayer.stop();
+        mediaPlayer.release();
 
         if(status==Status.WON) {
             if(fragmentoReliquia == 0){
