@@ -62,6 +62,8 @@
     <string name="dani">Daniel Martínez Álvarez</string>
     <string name="elisa">Elisa Bravo Torres</string>
 
+    <string name="anterior">Anterior</string>
+    <string name="Siguiente">Siguiente</string>
 
     <string name="return_call">return</string>
     <string name="abort">¿Seguro que quieres dejar la partida?</string>

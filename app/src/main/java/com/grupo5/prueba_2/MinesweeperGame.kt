@@ -54,9 +54,9 @@ class MinesweeperGame : AppCompatActivity() {
         const val ESCALERA = -2
         const val PERSONAJE = -3
         const val FRAGMENTO_RELIQUIA = -4
-        const val TIEMPO_FACIL : Long = 240_000    //
-        const val TIEMPO_MEDIO : Long = 600_000     // Faltan de ajustar
-        const val TIEMPO_DIFICIL : Long = 700_000   //
+        const val TIEMPO_FACIL : Long = 240_000    // 4 minutos
+        const val TIEMPO_MEDIO : Long = 420_000     // 7 minutos
+        const val TIEMPO_DIFICIL : Long = 700_000   // 11 y pico
         const val REVEAL="reveal"
         const val FLAG= "flag"
         val movement= arrayOf(-1,0,1)
@@ -691,7 +691,7 @@ class MinesweeperGame : AppCompatActivity() {
 
         var milisegundos : Long = ((minutos*60) + segundos)*1000
 
-        milisegundos -= 5000 * (mundo+1)
+        milisegundos -= 15_000 * (nivel+1) + 10_000 * (mundo)
 
         establecerCuentaAtras(milisegundos)
 

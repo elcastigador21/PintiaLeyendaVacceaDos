@@ -42,7 +42,7 @@ class Reliquias : AppCompatActivity(){
             "Pomo de puñal" to R.drawable.pomo_de_punal,
             "Cajitas de barro" to R.drawable.cajitas_de_barro,
             "Sonajas" to R.drawable.sonajas,
-            "Tintinabulas" to R.drawable.tintinabulas,
+            "Tintinábulas" to R.drawable.tintinabulas,
             "Estela de clunia" to R.drawable.estela_de_clunia,
             "Denario de Baskunes" to R.drawable.denario_de_baskunes,
             "Tapa de horno" to R.drawable.tapa_de_horno,

@@ -4,71 +4,71 @@
     "mundoId" : 0,
     "nivelId" : 0,
     "nombre": "Denario de Baskunes",
-    "descripcion": "Un objeto antiguo lleno de misterio",
-    "descubierta": false
+    "descripcion": "Los vacceos no tenían monedas como nosotros. Para conseguir cosas, hacían trueque, que significa cambiar una cosa por otra, como comida por ropa.\n Pero, con el tiempo, los vacceos empezaron a tener monedas. ¿Cómo? Algunos hombres de las ciudades vacceas se iban lejos para ser soladados en los ejercitos de los cartagineses o romanos. Ellos ganaban monedas como pago y las traían de vuelta cuando regrasaban a casa.\nEsta moneda se llama denario de baskunes, fue encontrada en Pintia. La fabricaron en talleres que estabn entre el río Ebro y los Prineos.",
+    "descubierta": true
   },
   {
     "id": 2,
     "mundoId" : 0,
     "nivelId" : 1,
     "nombre": "Tapa de horno",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "descripcion": "Esta tapa de horno está hecha de arcilla, un material que se endurece cuando se seca o se calienta. Lo interesante es que tiene un dibujo de un animal visto desde arriba, como si mirasen al animal desde el cielo.\nFue encontrada en una casa de Pintia, la número 11. En esta casa, había tres hornos para cocinar comida y también un molino redondo que usaban para triturar trigo y hacer harina.\n",
+    "descubierta": true
   },
   {
     "id": 3,
     "mundoId" : 0,
     "nivelId" : 2,
     "nombre": "Zoomorfo vacceo",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "descripcion": "Este objeto antiguo es un zoomorfo, una figurita con forma de animal. Está hecho de hueso y lo curiosos es que está diseñado como si estuvieras viendo al animal desde arriba.\nLos vacceos usaban estas figuritas como amuletos de protección. También las usaban como adorno, como llevar un collar o una pulsera hoy en día.\nLa figura fue encontrada en Cauca, que hoy es la ciudad de Coca, en Segovia.\n",
+    "descubierta": true
   },
   {
     "id": 4,
     "mundoId" : 1,
     "nivelId" : 0,
     "nombre": "Pomo de puñal",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "descripcion": "Este objeto antiguo es el pomo de un puñal, que es la parte del mango donde se agarra. Fue encontrado en una tumba de la necrópolis de las Ruedas en Pintia.\nPor su tamaño, este pomo seguramente era de un arma muy grande, pero no se usaba para pelear. Tal vez era más bien un objeto especial o decorativo.\nLo más interesante es que tiene dibujos de animales, como jabalíes o lobos vistos desde arriba. Está hecho con materiales valiosos como la plata y el bronce",
+    "descubierta": true
   },
   {
     "id": 5,
     "mundoId" : 1,
     "nivelId" : 1,
     "nombre": "Broche de perro",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "descripcion": "Este broche fue encontrado en la necrópolis de las Ruedas, en Pintia, dentro de la tumba de una niña que tenía unos 7 años.\nEl broche, que está hecho de bronce, tenía un significado especial: servía para proteger a la niña en su viaje al más allá.\nLos ojos del perro están hechos de calcita blanca, un material que podía brillar en la oscuridad.",
+    "descubierta": true
   },
   {
     "id": 6,
     "mundoId" : 1,
     "nivelId" : 2,
     "nombre": "Cajitas de barro",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "descripcion": "Estas cajitas hechas de barro tienen formas muy curiosas: parecen animales con 4 patas. El asa de la cajita hacía de cabeza del animal, y podía ser un caballo, una vaca, un ternero o una oveja.\nSe cree que estas cajitas se usaban como saleros, para guardar la sal que ponían a la carne. Algunas de estas cajitas eran encontradas en las tumbas para acompañar a la carne que dejaban en las tumbas como ofrendas para los más poderosos.\n",
+    "descubierta": true
   },
   {
     "id": 7,
     "mundoId" : 2,
     "nivelId" : 0,
     "nombre": "Sonajas",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "descripcion": "Estas sonajas antiguas fueron encontradas en las tumbas de los niños en la necrópolis de las ruedas, en Pintia. Se cree que tenían un propósito especial: proteger a los niños, ya fueran los recien nacidos o a los que acababan de fallecer.\nLas sonajas tienen forma de cilindro, como un tubo, y dentro tienen pequeñas pelotitas de barro. Cuando se agitaban, hacían ruido, como una música suave para proteger o acompañar a los niños.",
+    "descubierta": true
   },
   {
     "id": 8,
     "mundoId" : 2,
     "nivelId" : 1,
-    "nombre": "Tintinabulas",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "nombre": "Tintinábulas",
+    "descripcion": "Las tintinábulas son como unas placas hechas de barro que tienen anillas. Al moverse con el viento o cuando alguien las agitaba, producían un sonido especial, como un tintineo.\nEstas reliquias tan curiosas solo se han encontrado en Pintia, y se cree que las usaban mujeres jóvenes y adultas. Los vacceos pensaban que el sonido que producían servía para proteger a las personas.",
+    "descubierta": true
   },
   {
     "id": 9,
     "mundoId" : 2,
     "nivelId" : 2,
     "nombre": "Estela de clunia",
-    "descripcion": "Se dice que esta reliquia está maldita.",
-    "descubierta": false
+    "descripcion": "Las estelas eran piedras especiales que se usaban para marcar las tumbas de los guerreros en la auntigüedad. Esta estela fue encontrada en Clunia, en la actual Coruña del Conde, en Burgos.\nEn la estela se puede ver el dibujo de un hombre montado a caballo, que lleva una lanza y un escudo .\nAhora, esta estela se ha convertido en el emblema de la necrópolis de las Ruedas de Pintia.\n",
+    "descubierta": true
   }
 ]
