@@ -66,6 +66,12 @@ class MinesweeperGame : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minesweeper_game)
 
+        //Codigo para iniciar la musica del nivel
+        val afd = assets.openFd("Cancion1.mp4")
+        mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+        mediaPlayer.prepare()
+        mediaPlayer.start()
+
         if(!playStarted) {
             Toast.makeText(this,"Toca el tablero para comenzar. ¡Buena suerte!",Toast.LENGTH_LONG).show()
             playStarted
@@ -75,14 +81,6 @@ class MinesweeperGame : AppCompatActivity() {
         //Mundo indica la dificultad
         mundo=intent.getIntExtra("Mundo",0)
         nivel=intent.getIntExtra("Nivel", 0)
-
-        //Codigo para iniciar la musica del nivel
-        val afd = assets.openFd("Cancion3.mp4")
-        mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-        mediaPlayer.prepare()
-        mediaPlayer.start()
-
-
 
         when (mundo) {
 
@@ -438,6 +436,7 @@ class MinesweeperGame : AppCompatActivity() {
         mediaPlayer.release();
 
         if(status==Status.WON) {
+
             if(fragmentoReliquia == 0){
                 descubirReliquia()
             }
