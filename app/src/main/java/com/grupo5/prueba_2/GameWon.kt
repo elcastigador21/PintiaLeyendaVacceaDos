@@ -30,7 +30,7 @@ class GameWon : AppCompatActivity() {
         {
             trophy.setImageResource(R.drawable.lost)
             gameMessage.text= getString(R.string.game_loss)
-            assets.openFd("Violinlose5.mp3")
+            afd = assets.openFd("Violinlose5.mp3")
 
         }
         else if(result=="Win")
