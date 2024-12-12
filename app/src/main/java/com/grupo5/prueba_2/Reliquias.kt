@@ -1,25 +1,13 @@
 package com.grupo5.prueba_2
 
 import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.view.animation.AlphaAnimation
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ListView
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
-import org.json.JSONArray
-import java.io.File
 import kotlin.collections.mapOf
 
 class Reliquias : AppCompatActivity(){

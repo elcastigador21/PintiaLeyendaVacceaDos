@@ -33,11 +33,6 @@ class MinesweeperGame : AppCompatActivity() {
     private var fragmentoReliquia=0
     private var mineboard= Array(rows){Array(columns){MineCell(this)}}
     private var playStarted=false
-    private var played=0
-    private var won=0
-    private var lost=0
-    private var lastGameTime=Integer.MAX_VALUE
-    private var fastestTime=Integer.MAX_VALUE
     private var mundo = -1
     private var nivel = -1
 
@@ -62,12 +57,12 @@ class MinesweeperGame : AppCompatActivity() {
         val movement= arrayOf(-1,0,1)
     }
 
-    private var toMove: String =REVEAL
+    private var toMove: String = REVEAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minesweeper_game)
-        //starts the timer
+
         if(!playStarted) {
             Toast.makeText(this,"Toca el tablero para comenzar. ¡Buena suerte!",Toast.LENGTH_LONG).show()
             playStarted
@@ -126,8 +121,6 @@ class MinesweeperGame : AppCompatActivity() {
         instructions.setOnClickListener {
             val builder= AlertDialog.Builder(this)
             with(builder) {
-
-
                 setTitle(getString(R.string.instrucciones))
                 setMessage(
                     "¡Bienvenido a Pintia: la Leyenda Vaccea!\n" +
@@ -148,12 +141,11 @@ class MinesweeperGame : AppCompatActivity() {
             val dialogoInstrucciones= builder.create()
             dialogoInstrucciones.show()
         }
-        // on clicking restart icon,ser will be given an alert dialog confirming the action and if clicked yes, game will restart again
 
+        //Al clickar en reiniciar, aparecera un dialogo para confirmar
         restart.setOnClickListener {
             val builder= AlertDialog.Builder(this)
             with(builder) {
-
                 setTitle("Reiniciar juego")
                 setMessage("La partida esta en curso. ¿Seguro que quieres reiniciar?")
                 setPositiveButton("Si")
@@ -175,9 +167,7 @@ class MinesweeperGame : AppCompatActivity() {
                 ponerDialogoAtras()
             }
         }
-
         onBackPressedDispatcher.addCallback(this, callback)
-
     }
 
 
@@ -189,13 +179,12 @@ class MinesweeperGame : AppCompatActivity() {
 
         val choice : ImageButton = findViewById(R.id.choice)
         var id=1
-        //on clicking choice button user can switch its moves between reveal and flag
-        choice.setOnClickListener {
 
+        //Si se hace click en el boton choice, se puede cambiar entre pala y bandera
+        choice.setOnClickListener {
             if(toMove== REVEAL) {
                 toMove= FLAG
                 choice.setImageResource(R.drawable.flag)
-
             }
             else {
                 toMove= REVEAL
@@ -248,7 +237,7 @@ class MinesweeperGame : AppCompatActivity() {
 
     }
 
-    //used to display the cells
+    //Muestra el tablero
     private fun displayBoard() {
         mineboard.forEach { row ->
             row.forEach {
@@ -423,61 +412,13 @@ class MinesweeperGame : AppCompatActivity() {
 
 
     private fun finalResult() {
-        //timer stops as soon as game finishes
+        //Para la cuenta atras
         cuentaAtras?.cancel()
 
-        val elapsedTime = 0
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        val currScore = elapsedTime.toInt()
-
-
-        fastestTime= sharedPref.getInt("BestScore", Integer.MAX_VALUE)
-        lastGameTime = sharedPref.getInt("LastTime", Integer.MAX_VALUE)
-        played= sharedPref.getInt("Played",0)
-        won= sharedPref.getInt("Won",0)
-        lost= sharedPref.getInt("Lost",0)
-        sharedPref.edit(). putInt("Played",played+1).apply()
-        played++
-
-        
         if(status==Status.WON) {
-            lastGameTime=currScore
-            won++
-            if(currScore<fastestTime) {
-                fastestTime = currScore
-            }
-
             if(fragmentoReliquia == 0){
                 descubirReliquia()
             }
-        }
-
-        else if(status == Status.LOST){
-            lost++
-            lastGameTime=Int.MAX_VALUE
-        }// updation is done as per the result of game
-        with(sharedPref.edit()) {
-            putInt("BestScore",fastestTime)
-            putInt("LastTime",lastGameTime)
-            putInt("Won",won)
-            putInt("Lost",lost)
-
-            apply()
-        }
-
-        // shared preferences used to store and share game stats with the main activity
-        val sharedPreferences :SharedPreferences=this.getSharedPreferences("Stats",Context.MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putInt("total",played)
-            putInt("won",won)
-            putInt("last",lastGameTime)
-            putInt("best",fastestTime)
-            putInt("lost",lost)
-            apply()
-
-        }
-
-        if(status==Status.WON) {
             val intent= Intent(this, GameWon::class.java).apply {
                 putExtra("result","Won")
             }
@@ -535,10 +476,8 @@ class MinesweeperGame : AppCompatActivity() {
         try {
             val file = File(filesDir, outputFileName)
 
-            // Leer el contenido del archivo
             val jsonString = file.bufferedReader().use { it.readText() }
 
-            // Convertir el string JSON en un JSONArray
             jsonArray = JSONArray(jsonString)
 
         }
@@ -553,7 +492,7 @@ class MinesweeperGame : AppCompatActivity() {
         return jsonArray
     }
 
-    // Guardar el JSONArray en el archivo JSON
+    // Guarda el JSONArray en el archivo JSON
     private fun guardarJsonEnFilesDir(jsonArray: JSONArray) {
         try {
             val file = File(filesDir, outputFileName)
@@ -564,7 +503,7 @@ class MinesweeperGame : AppCompatActivity() {
     }
 
 
-    // isComplete() function checks for the win conditions
+    // isComplete verifica las condiciones para ganar la partida
     private fun isComplete():Boolean{
         mineboard.forEach{ row->
             row.forEach{
@@ -634,6 +573,7 @@ class MinesweeperGame : AppCompatActivity() {
         }
     }
 
+    //Las reliquias se disponene en el tablero, siempre y cuando no haya ni una mina, ni un numero
     private fun ponerFragmentoReliquia(){
         var coordX : Int
         var coordY : Int
@@ -699,6 +639,7 @@ class MinesweeperGame : AppCompatActivity() {
     }
 
 
+    //Coloca los numeros segun los romanos que haya alrededor
     private fun updateNeighbours(  x: Int, y: Int) {
         for (i: Int in movement) {
             for (j in movement) {
